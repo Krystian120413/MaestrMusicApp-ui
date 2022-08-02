@@ -1,0 +1,70 @@
+.wrapper {
+  max-width: 600px;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto auto;
+  justify-content: space-around;
+  align-items: center;
+  justify-items: center;
+  width: 80%;
+  height: 90%;
+  border: 6px solid black;
+}
+
+.email {
+  &--label {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+
+  &--input {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    height: 3rem;
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    border-radius: 10px;
+    border: 2px solid #fff;
+    font-size: 1.5em;
+  }
+}
+
+.passwd {
+  &--label {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+  }
+
+  &--input {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    height: 3rem;
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    border-radius: 10px;
+    border: 2px solid #fff;
+    font-size: 1.5em;
+  }
+}
+
+.submit-btn {
+  grid-column: 1 / 3;
+  grid-row: 3 / 4;
+  background-color: var(--main-bg-color);
+  width: 40%;
+  height: 30%;
+  color: var(--main-color);
+  font-size: 1.5em;
+  border: none;
+  border-radius: 4px;
+
+  a {
+    text-decoration: none;
+    color: var(--main-color);
+  }
+}
