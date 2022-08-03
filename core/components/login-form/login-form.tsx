@@ -24,7 +24,7 @@ export const LoginForm = () => {
           name="userPassword"
         />
         <button className={styles.submitBtn}>
-          <Link href="/user">Sign In</Link>
+          <Link href="/user-panel">Sign In</Link>
         </button>
       </form>
       {/* <SignInLink /> */}

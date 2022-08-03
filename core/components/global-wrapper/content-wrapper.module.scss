@@ -1,0 +1,9 @@
+.global-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.content-wrapper {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+}

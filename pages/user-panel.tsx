@@ -1,13 +1,13 @@
 import type { NextPage } from 'next';
 import { ContentWrapper } from 'components/global-wrapper';
-import { MainView } from 'components/main-view';
+import { Sidebar } from 'components/sidebar';
 
-const Home: NextPage = () => {
+const UserPanel: NextPage = () => {
   return (
     <ContentWrapper>
-      <MainView />
+      <Sidebar />
     </ContentWrapper>
   );
 };
 
-export default Home;
+export default UserPanel;

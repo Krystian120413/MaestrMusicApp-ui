@@ -1,5 +1,4 @@
-import Image from 'next/image';
-import logoSmall from 'assets/images/logo_maestr_small.png';
+import { Navbar } from 'components/navbar';
 import styles from './default-layout.module.scss';
 
 interface DefaultLayoutProps {
@@ -9,10 +8,7 @@ interface DefaultLayoutProps {
 export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   return (
     <div className={styles.wrapper}>
-      <header>
-        <Image src={logoSmall} alt="logo" />
-        <h1>MAESTR</h1>
-      </header>
+      <Navbar />
       <main className={styles.content}>{children}</main>
     </div>
   );

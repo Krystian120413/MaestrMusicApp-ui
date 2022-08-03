@@ -1,0 +1,23 @@
+.navbar {
+  height: 80px;
+  width: 100%;
+  max-width: var(--max-content-width);
+  background-color: var(--background-primary-color);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 auto;
+
+  &-image {
+    width: 80px;
+  }
+
+  &-heading {
+    font-size: 3.6em;
+    line-height: 150%;
+    margin-top: 0.6em;
+    margin-left: 0.2em;
+    display: flex;
+    align-items: center;
+  }
+}
