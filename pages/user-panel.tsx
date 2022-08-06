@@ -1,11 +1,11 @@
 import type { NextPage } from 'next';
-import { ContentWrapper } from 'components/global-wrapper';
-import { Sidebar } from 'components/sidebar';
+import { ContentWrapper } from 'components/content-wrapper';
+import { Tabs } from 'components/tabs';
 
 const UserPanel: NextPage = () => {
   return (
     <ContentWrapper>
-      <Sidebar />
+      <Tabs />
     </ContentWrapper>
   );
 };
