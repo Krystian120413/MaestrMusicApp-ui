@@ -27,10 +27,12 @@ export const Tab = ({ className, title, backgroundColor }: TabProps) => {
   };
 
   return (
-    <div className={clsx(className, styles.wrapper)}>
-      <div className={clsx(styles.card, changeCardColor)}>
-        <h3 className={styles.cardTitle}>{title}</h3>
-      </div>
+    <div className={clsx(styles.wrapper, className)}>
+      <button type="button" className={styles.button}>
+        <div className={clsx(styles.card, changeCardColor())}>
+          <h3 className={styles.cardTitle}>{title}</h3>
+        </div>
+      </button>
     </div>
   );
 };

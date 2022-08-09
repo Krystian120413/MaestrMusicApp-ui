@@ -1,3 +1,4 @@
+export const button: string;
 export const card: string;
 export const cardDarkOrange: string;
 export const cardGreen: string;
