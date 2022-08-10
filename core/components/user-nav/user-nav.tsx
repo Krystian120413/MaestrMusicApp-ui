@@ -4,7 +4,9 @@ import styles from './user-nav.module.scss';
 export const UserNav = () => {
   return (
     <nav className={styles.nav}>
-      <SettingsIcon />
+      <button type="button">
+        <SettingsIcon />
+      </button>
     </nav>
   );
 };
