@@ -1,0 +1,19 @@
+.global-wrapper {
+  width: 20%;
+
+  @include md {
+    width: 100%;
+  }
+}
+
+.range-wrapper {
+  display: none;
+
+  @include md {
+    display: flex;
+  }
+
+  &--expanded {
+    display: flex;
+  }
+}
