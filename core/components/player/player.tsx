@@ -15,16 +15,24 @@ export const Player = ({
   expanded,
 }: PlayerProps) => {
   return (
-    <div className={clsx(className, styles.globalWrapper)}>
+    <div
+      className={clsx(
+        className,
+        styles.globalWrapper,
+        expanded && styles.globalWrapperExpanded
+      )}
+    >
       <div
         className={clsx(
           styles.rangeWrapper,
           expanded && styles.rangeWrapperExpanded
         )}
       >
-        <input type="range" min={0} max={duration} />
+        <input type="range" className={styles.range} min={0} max={duration} />
       </div>
-      <div>{audioSrc}II</div>
+      <div>
+        {expanded && 'shuffle prev'} play {expanded && 'next like'}
+      </div>
     </div>
   );
 };

@@ -1,13 +1,14 @@
 .global-wrapper {
   width: 20%;
 
-  @include md {
+  &--expanded {
     width: 100%;
   }
 }
 
 .range-wrapper {
   display: none;
+  width: 100%;
 
   @include md {
     display: flex;
@@ -15,5 +16,10 @@
 
   &--expanded {
     display: flex;
+    justify-content: center;
   }
+}
+
+.range {
+  width: 100%;
 }
