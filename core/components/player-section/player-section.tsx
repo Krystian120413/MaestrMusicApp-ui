@@ -74,7 +74,16 @@ export const PlayerSection = ({
         duration={duration}
         expanded={isExpanded}
       />
-      <span className={styles.expandButton}>expand btn</span>
+      <button
+        type="button"
+        className={clsx(
+          styles.expandButton,
+          isExpanded && styles.expandButtonExpanded
+        )}
+        onClick={() => setIsExpanded(true)}
+      >
+        expand btn
+      </button>
     </div>
   );
 };

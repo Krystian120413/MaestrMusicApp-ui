@@ -5,6 +5,7 @@ export const backButton: string;
 export const cover: string;
 export const coverExpanded: string;
 export const expandButton: string;
+export const expandButtonExpanded: string;
 export const expandButtonInvisible: string;
 export const expandButtonInvisibleExpanded: string;
 export const navigationButtons: string;

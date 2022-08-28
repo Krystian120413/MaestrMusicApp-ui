@@ -70,6 +70,10 @@
 .loop-button {
   display: none;
 
+  @include md {
+    display: block;
+  }
+
   &--expanded {
     display: block;
   }
@@ -79,6 +83,10 @@
   display: none;
   transform: rotateY(180deg);
 
+  @include md {
+    display: block;
+  }
+
   &--expanded {
     display: block;
   }
@@ -87,6 +95,10 @@
 .next-button {
   display: none;
 
+  @include md {
+    display: block;
+  }
+
   &--expanded {
     display: block;
   }
@@ -94,6 +106,10 @@
 
 .heart-button {
   display: none;
+
+  @include md {
+    display: block;
+  }
 
   &--expanded {
     display: block;

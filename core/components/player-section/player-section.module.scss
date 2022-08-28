@@ -30,6 +30,10 @@
   @include md {
     display: block;
   }
+
+  &--expanded {
+    display: none;
+  }
 }
 
 .expand-button--invisible {
@@ -96,6 +100,16 @@
       "author" 1fr
       / auto;
     justify-content: center;
+
+    @include md {
+      width: 80%;
+      grid-template:
+      "cover title" 1fr
+      "cover author" 1fr
+      "cover ." 1fr
+      / 560px auto;
+      justify-content: flex-start;
+    }
   }
 }
 
@@ -114,6 +128,11 @@
   &--expanded {
     height: 280px;
     width: 280px;
+
+    @include md {
+      height: 480px;
+      width: 480px;
+    }
   }
 }
 
@@ -132,6 +151,12 @@
     margin: 32px 0 8px;
     font-size: 2.4rem;
     text-align: center;
+
+    @include md {
+      font-size: 4.8rem;
+      width: 400px;
+      text-align: center;
+    }
   }
 }
 
@@ -150,6 +175,12 @@
     padding: 0;
     text-align: center;
     font-size: 1.4rem;
+
+    @include md {
+      font-size: 3.2rem;
+      width: 400px;
+      text-align: center;
+    }
   }
 }
 
