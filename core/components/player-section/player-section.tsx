@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import clsx from 'clsx';
+import AddIcon from 'assets/icons/add-icon.svg';
+import BackIcon from 'assets/icons/back-icon.svg';
 import { Player } from 'components/player/player';
 import styles from './player-section.module.scss';
 
@@ -25,8 +27,8 @@ export const PlayerSection = ({
       <button
         type="button"
         className={clsx(
-          styles.expandButton,
-          isExpanded && styles.expandButtonExpanded
+          styles.expandButtonInvisible,
+          isExpanded && styles.expandButtonInvisibleExpanded
         )}
         onClick={() => setIsExpanded(true)}
       >
@@ -40,9 +42,11 @@ export const PlayerSection = ({
             onClick={() => setIsExpanded(false)}
           >
             BACK
+            <BackIcon />
           </button>
           <button className={styles.addButton} type="button">
             ADD
+            <AddIcon />
           </button>
         </div>
       )}
@@ -64,13 +68,13 @@ export const PlayerSection = ({
           {author}
         </div>
       </div>
-      <div className={styles.rangeWrapper}>input range</div>
       <Player
         className={styles.playerWrapper}
         audioSrc={audioSrc}
         duration={duration}
         expanded={isExpanded}
       />
+      <span className={styles.expandButton}>expand btn</span>
     </div>
   );
 };

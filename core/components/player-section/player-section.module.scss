@@ -10,6 +10,12 @@
   color: var(--font-primary-color);
   box-shadow: 0 2px 6px var(--box-shadow-color);
   display: flex;
+  align-items: center;
+
+  @include md {
+    height: 120px;
+    padding: 0 24px;
+  }
 
   &--expanded {
     height: 100vh;
@@ -19,6 +25,14 @@
 }
 
 .expand-button {
+  display: none;
+
+  @include md {
+    display: block;
+  }
+}
+
+.expand-button--invisible {
   position: absolute;
   top: 0;
   left: 0;
@@ -26,6 +40,10 @@
   height: 100%;
   font-size: 0;
   z-index: 9;
+
+  @include md {
+    display: none;
+  }
 
   &--expanded {
     display: none;
@@ -42,10 +60,16 @@
 
 .back-button {
   color: var(--font-primary-color);
+  font-size: 0;
+  height: 40px;
+  width: 32px;
 }
 
 .add-button {
   color: var(--font-primary-color);
+  font-size: 0;
+  height: 40px;
+  width: 40px;
 }
 
 .song-description-wrapper {
@@ -54,7 +78,15 @@
   grid-template:
     "cover title" 1fr
     "cover author" 1fr
-    / 48px auto;
+    / 54px auto;
+
+  @include md {
+    width: 30%;
+    grid-template:
+      "cover title" 1fr
+      "cover author" 1fr
+      / 84px auto;
+  }
 
   &--expanded {
     width: auto;
@@ -69,8 +101,15 @@
 
 .cover {
   grid-area: cover;
+  width: 54px;
+  height: 54px;
   background-color: var(--background-secondary-color);
   border-radius: 8px;
+
+  @include md {
+    width: 84px;
+    height: 84px;
+  }
 
   &--expanded {
     height: 280px;
@@ -84,8 +123,14 @@
   font-weight: 700;
   padding-left: 16px;
 
+  @include md {
+    font-size: 3.6rem;
+  }
+
   &--expanded {
     padding: 0;
+    margin: 32px 0 8px;
+    font-size: 2.4rem;
     text-align: center;
   }
 }
@@ -97,9 +142,14 @@
   font-weight: 400;
   padding-left: 16px;
 
+  @include md {
+    font-size: 2.4rem;
+  }
+
   &--expanded {
     padding: 0;
     text-align: center;
+    font-size: 1.4rem;
   }
 }
 
@@ -109,4 +159,8 @@
 
 .player-wrapper {
   width: 16%;
+
+  @include md {
+    width: 60%;
+  }
 }
