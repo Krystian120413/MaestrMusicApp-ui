@@ -18,6 +18,7 @@
 
   @include md {
     display: flex;
+    justify-content: flex-end;
   }
 
   &--expanded {
@@ -53,6 +54,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @include md {
+      margin-right: 80px;
+    }
 
     &--expanded {
       margin-top: 64px;

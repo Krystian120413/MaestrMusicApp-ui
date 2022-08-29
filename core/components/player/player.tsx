@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import HeartIcon from 'assets/icons/heart-icon.svg';
 import LoopIcon from 'assets/icons/loop-icon.svg';
@@ -16,11 +16,30 @@ type PlayerProps = {
 
 export const Player = ({
   className,
-  audioSrc,
+  audioSrc = '',
   duration = 0,
   expanded,
 }: PlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [songSrc, setSongSrc] = useState(audioSrc);
+  const [audio, setAudio] = useState<null | HTMLAudioElement>();
+
+  useEffect(() => {
+    setAudio(new Audio(audioSrc));
+  }, []);
+
+  useEffect(() => {
+    setSongSrc(audioSrc);
+    if (audio) audio.src = songSrc;
+  }, [audio, audioSrc, songSrc]);
+
+  useEffect(() => {
+    if (audio) {
+      if (isPlaying) audio.play();
+      else audio.pause();
+    }
+  }, [audio, isPlaying]);
+
   return (
     <div
       className={clsx(

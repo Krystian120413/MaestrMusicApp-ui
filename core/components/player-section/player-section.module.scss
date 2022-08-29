@@ -85,7 +85,7 @@
     / 54px auto;
 
   @include md {
-    width: 30%;
+    width: 24%;
     grid-template:
       "cover title" 1fr
       "cover author" 1fr
@@ -193,5 +193,6 @@
 
   @include md {
     width: 60%;
+    max-width: 1000px;
   }
 }

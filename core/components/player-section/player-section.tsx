@@ -1,15 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import clsx from 'clsx';
 import AddIcon from 'assets/icons/add-icon.svg';
 import BackIcon from 'assets/icons/back-icon.svg';
 import { Player } from 'components/player/player';
+import getSongSrc from 'utils/getSongSrc';
 import styles from './player-section.module.scss';
 
 type PlayerSectionProps = {
   title?: string;
   author?: string;
   cover?: string | React.ReactNode;
-  audioSrc?: string;
   duration?: number;
 };
 
@@ -17,10 +18,20 @@ export const PlayerSection = ({
   title = 'title',
   author = 'author',
   cover = 'cover',
-  audioSrc,
   duration = 0,
 }: PlayerSectionProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [audioSrc, setAudioSrc] = useState('');
+
+  useEffect(() => {
+    try {
+      const song = getSongSrc();
+      setAudioSrc(song.song);
+    } catch (error) {
+      // in progress
+      toast.error('🦄 Wow so easy!');
+    }
+  }, [audioSrc]);
 
   return (
     <div className={clsx(styles.wrapper, isExpanded && styles.wrapperExpanded)}>
