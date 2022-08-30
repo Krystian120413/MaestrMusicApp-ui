@@ -1,7 +1,23 @@
 :root {
   --max-content-width: 1400px;
-  --font-family-base: sans-serif;
+
+  //colors
+  --font-primary-color: #fff;
+  --background-primary-color: #212121;
+  --background-secondary-color: #fff;
+  --primary-gray-color: #959595;
+  --primary-red-color: #ef2d56;
+  --secondary-red-color: rgb(239 45 86 / 70%);
+  --primary-orange-color: #ed7d3a;
+  --secondary-orange-color: rgb(237 125 58 / 70%);
+  --primary-light-green-color: #8cd867;
+  --secondary-light-green-color: rgb(140 216 103 / 70%);
+  --primary-green-color: #2fbf71;
+  --secondary-green-color: rgb(47 191 113 / 70%);
+  --box-shadow-color: #fff;
+
+  //fonts
   --font-size-base: 1.4rem;
-  --font-primary-color: #39b97e;
-  --background-primary-color: rgb(0 0 0);
+  --font-heading-size: 2.4rem;
+  --font-family-base: sans-serif;
 }

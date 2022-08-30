@@ -24,5 +24,6 @@
         "css",
         "scss"
     ],
-    "prettier.endOfLine": "lf"
+    "prettier.endOfLine": "lf",
+    "files.eol": "\n"
 }
