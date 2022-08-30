@@ -9,10 +9,9 @@ const getSongSrc = () => {
 
   // return response.data;
 
-  const songInfo = async () =>
-    axios.get(`${API_URL}song-info`).catch(() => {
-      toast.error('Some error occured during geting song');
-    });
+  const songInfo = axios.get(`${API_URL}song-info`).catch(() => {
+    toast.error('Some error occured during geting song');
+  });
 
   const song = {
     song: `${API_URL}song`,
