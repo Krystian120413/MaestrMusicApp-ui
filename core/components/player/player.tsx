@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import HeartIcon from 'assets/icons/heart-icon.svg';
 import LoopIcon from 'assets/icons/loop-icon.svg';
@@ -15,43 +15,44 @@ type PlayerProps = {
 
 export const Player = ({ className, audioSrc = '', expanded }: PlayerProps) => {
   const [songSrc, setSongSrc] = useState(audioSrc);
-  const [audio, setAudio] = useState<null | HTMLAudioElement>();
   const [isPlaying, setIsPlaying] = useState(false);
   const [trackProgress, setTrackProgress] = useState(0);
-  const [duration, setDuration] = useState(1);
+  const [duration, setDuration] = useState(100);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    setAudio(new Audio(audioSrc));
-    if (audio) setDuration(audio?.duration);
+    audioRef.current = new Audio(audioSrc);
+    audioRef.current.src = audioSrc;
   }, []);
 
   useEffect(() => {
-    setSongSrc(audioSrc);
-    if (audio) {
-      audio.src = songSrc;
-      setDuration(audio.duration);
+    if (audioRef.current) {
+      audioRef.current.src = audioSrc;
+      setDuration(audioRef.current.duration);
     }
-  }, [audio, audioSrc, songSrc]);
+  }, [audioSrc, songSrc]);
 
   useEffect(() => {
-    if (audio) {
-      if (isPlaying) audio.play();
-      else audio.pause();
+    if (audioRef.current) {
+      if (isPlaying) audioRef.current.play();
+      else audioRef.current.pause();
     }
-  }, [audio, isPlaying]);
+  }, [isPlaying]);
 
   useEffect(() => {
     const trackProgressUpdate = setInterval(() => {
-      if (audio) setTrackProgress(audio?.currentTime);
+      if (audioRef.current) {
+        setTrackProgress(audioRef.current.currentTime);
+      }
     }, 1000);
 
     return () => clearInterval(trackProgressUpdate);
   }, []);
 
   const onTimeChange = (value: number) => {
-    if (audio) {
-      audio.currentTime = value;
-      setTrackProgress(audio.currentTime);
+    if (audioRef.current) {
+      audioRef.current.currentTime = value;
+      setTrackProgress(audioRef.current.currentTime);
     }
   };
 
@@ -74,7 +75,7 @@ export const Player = ({ className, audioSrc = '', expanded }: PlayerProps) => {
           className={styles.range}
           min={0}
           max={duration}
-          step={1}
+          step={0.5}
           value={trackProgress}
           onChange={(e) => onTimeChange(Number(e.target.value))}
         />
