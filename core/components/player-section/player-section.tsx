@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import clsx from 'clsx';
 import AddIcon from 'assets/icons/add-icon.svg';
 import BackIcon from 'assets/icons/back-icon.svg';
@@ -11,26 +10,19 @@ type PlayerSectionProps = {
   title?: string;
   author?: string;
   cover?: string | React.ReactNode;
-  duration?: number;
 };
 
 export const PlayerSection = ({
   title = 'title',
   author = 'author',
   cover = 'cover',
-  duration = 0,
 }: PlayerSectionProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [audioSrc, setAudioSrc] = useState('');
 
   useEffect(() => {
-    try {
-      const song = getSongSrc();
-      setAudioSrc(song.song);
-    } catch (error) {
-      // in progress
-      toast.error('🦄 Wow so easy!');
-    }
+    const song = getSongSrc();
+    setAudioSrc(song.song);
   }, [audioSrc]);
 
   return (
@@ -82,7 +74,6 @@ export const PlayerSection = ({
       <Player
         className={styles.playerWrapper}
         audioSrc={audioSrc}
-        duration={duration}
         expanded={isExpanded}
       />
       <button

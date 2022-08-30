@@ -10,27 +10,27 @@ import styles from './player.module.scss';
 type PlayerProps = {
   className?: string;
   audioSrc?: string;
-  duration?: number;
   expanded: boolean;
 };
 
-export const Player = ({
-  className,
-  audioSrc = '',
-  duration = 0,
-  expanded,
-}: PlayerProps) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+export const Player = ({ className, audioSrc = '', expanded }: PlayerProps) => {
   const [songSrc, setSongSrc] = useState(audioSrc);
   const [audio, setAudio] = useState<null | HTMLAudioElement>();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [trackProgress, setTrackProgress] = useState(0);
+  const [duration, setDuration] = useState(1);
 
   useEffect(() => {
     setAudio(new Audio(audioSrc));
+    if (audio) setDuration(audio?.duration);
   }, []);
 
   useEffect(() => {
     setSongSrc(audioSrc);
-    if (audio) audio.src = songSrc;
+    if (audio) {
+      audio.src = songSrc;
+      setDuration(audio.duration);
+    }
   }, [audio, audioSrc, songSrc]);
 
   useEffect(() => {
@@ -39,6 +39,21 @@ export const Player = ({
       else audio.pause();
     }
   }, [audio, isPlaying]);
+
+  useEffect(() => {
+    const trackProgressUpdate = setInterval(() => {
+      if (audio) setTrackProgress(audio?.currentTime);
+    }, 1000);
+
+    return () => clearInterval(trackProgressUpdate);
+  }, []);
+
+  const onTimeChange = (value: number) => {
+    if (audio) {
+      audio.currentTime = value;
+      setTrackProgress(audio.currentTime);
+    }
+  };
 
   return (
     <div
@@ -54,7 +69,15 @@ export const Player = ({
           expanded && styles.rangeWrapperExpanded
         )}
       >
-        <input type="range" className={styles.range} min={0} max={duration} />
+        <input
+          type="range"
+          className={styles.range}
+          min={0}
+          max={duration}
+          step={1}
+          value={trackProgress}
+          onChange={(e) => onTimeChange(Number(e.target.value))}
+        />
       </div>
       <div
         className={clsx(

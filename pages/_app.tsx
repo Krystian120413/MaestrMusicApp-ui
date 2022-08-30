@@ -3,9 +3,12 @@ import type { AppProps } from 'next/app';
 import { DefaultLayout } from 'components/default-layout';
 import 'styles/global.scss';
 
+import 'react-toastify/dist/ReactToastify.css';
+
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <DefaultLayout>
+      <Component {...pageProps} />
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -17,8 +20,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         draggable
         pauseOnHover
       />
-      <Component {...pageProps} />
-      <ToastContainer />
     </DefaultLayout>
   );
 };

@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import axios from 'axios';
 import { ApiUrl } from 'helpers/constants/ApiUrl';
 
@@ -8,7 +9,10 @@ const getSongSrc = () => {
 
   // return response.data;
 
-  const songInfo = axios.get(`${API_URL}song-info`);
+  const songInfo = async () =>
+    axios.get(`${API_URL}song-info`).catch(() => {
+      toast.error('Some error occured during geting song');
+    });
 
   const song = {
     song: `${API_URL}song`,
