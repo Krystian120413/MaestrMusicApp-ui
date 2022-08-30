@@ -14,7 +14,6 @@ type PlayerProps = {
 };
 
 export const Player = ({ className, audioSrc = '', expanded }: PlayerProps) => {
-  const [songSrc, setSongSrc] = useState(audioSrc);
   const [isPlaying, setIsPlaying] = useState(false);
   const [trackProgress, setTrackProgress] = useState(0);
   const [duration, setDuration] = useState(100);
@@ -23,19 +22,21 @@ export const Player = ({ className, audioSrc = '', expanded }: PlayerProps) => {
   useEffect(() => {
     audioRef.current = new Audio(audioSrc);
     audioRef.current.src = audioSrc;
+    setDuration(audioRef.current?.duration);
   }, []);
 
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.src = audioSrc;
-      setDuration(audioRef.current.duration);
+      setDuration(audioRef.current?.duration);
     }
-  }, [audioSrc, songSrc]);
+  }, [audioSrc]);
 
   useEffect(() => {
     if (audioRef.current) {
       if (isPlaying) audioRef.current.play();
       else audioRef.current.pause();
+      setDuration(audioRef.current.duration);
     }
   }, [isPlaying]);
 
@@ -43,6 +44,10 @@ export const Player = ({ className, audioSrc = '', expanded }: PlayerProps) => {
     const trackProgressUpdate = setInterval(() => {
       if (audioRef.current) {
         setTrackProgress(audioRef.current.currentTime);
+        if (audioRef.current.currentTime === audioRef.current.duration) {
+          setIsPlaying(false);
+          setDuration(0);
+        }
       }
     }, 1000);
 
@@ -74,7 +79,7 @@ export const Player = ({ className, audioSrc = '', expanded }: PlayerProps) => {
           type="range"
           className={styles.range}
           min={0}
-          max={duration}
+          max={duration || `${duration}`}
           step={0.5}
           value={trackProgress}
           onChange={(e) => onTimeChange(Number(e.target.value))}
