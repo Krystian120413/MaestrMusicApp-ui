@@ -1,0 +1,34 @@
+.wrapper {
+  width: 100%;
+  display: grid;
+  grid-template:
+    "playlists liked" auto
+    "playlists genres" auto
+    "recommended recommended" auto
+    "user-radio user-radio" auto /
+    1fr 1fr;
+  gap: 16px;
+}
+
+.playlists {
+  grid-area: playlists;
+  height: 300px;
+}
+
+.liked {
+  grid-area: liked;
+}
+
+.genres {
+  grid-area: genres;
+}
+
+.recommended {
+  grid-area: recommended;
+  height: 100px;
+}
+
+.user-radio {
+  grid-area: user-radio;
+  height: 80px;
+}

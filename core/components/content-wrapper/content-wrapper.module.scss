@@ -1,4 +1,6 @@
 .global-wrapper {
+  max-width: 1440px;
+  margin: auto;
   overflow: hidden;
   position: relative;
 }
@@ -6,4 +8,5 @@
 .content-wrapper {
   max-width: var(--max-content-width);
   margin: 0 auto;
+  padding: 16px;
 }
