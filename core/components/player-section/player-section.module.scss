@@ -34,13 +34,18 @@
 
 .expand-button {
   display: none;
+  font-size: 0;
+  width: 40px;
+  
 
   @include md {
     display: block;
+    margin-left: 40px;
   }
 
   &--expanded {
     display: none;
+    margin: 0;
   }
 }
 

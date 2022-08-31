@@ -2,27 +2,24 @@ import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import AddIcon from 'assets/icons/add-icon.svg';
 import BackIcon from 'assets/icons/back-icon.svg';
+import ExpandIcon from 'assets/icons/expand-icon.svg';
 import { Player } from 'components/player/player';
-import getSongSrc from 'utils/getSongSrc';
+import getSong from 'utils/getSong';
 import styles from './player-section.module.scss';
 
-type PlayerSectionProps = {
-  title?: string;
-  author?: string;
-  cover?: string | React.ReactNode;
-};
-
-export const PlayerSection = ({
-  title = 'title',
-  author = 'author',
-  cover = 'cover',
-}: PlayerSectionProps) => {
+export const PlayerSection = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [audioSrc, setAudioSrc] = useState('');
+  const [songInfo, setSongInfo] = useState({
+    title: '',
+    author: '',
+  });
+  const cover = '';
 
   useEffect(() => {
-    const song = getSongSrc();
+    const song = getSong();
     setAudioSrc(song.song);
+    console.log(song.title);
   }, [audioSrc]);
 
   return (
@@ -63,12 +60,12 @@ export const PlayerSection = ({
           {cover}
         </div>
         <div className={clsx(styles.title, isExpanded && styles.titleExpanded)}>
-          {title}
+          {songInfo.title}
         </div>
         <div
           className={clsx(styles.author, isExpanded && styles.authorExpanded)}
         >
-          {author}
+          {songInfo.author}
         </div>
       </div>
       <Player
@@ -85,6 +82,7 @@ export const PlayerSection = ({
         onClick={() => setIsExpanded(true)}
       >
         expand btn
+        <ExpandIcon />
       </button>
     </div>
   );
