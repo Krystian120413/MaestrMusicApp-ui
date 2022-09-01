@@ -13,12 +13,13 @@ export const PlayerSection = () => {
   const [songId, setSongId] = useState(0);
   const [audioSrc, setAudioSrc] = useState('');
   const [songDetails, setSongDetails] = useState<SongDetailsType>();
+  const [songPoster, setSongPoster] = useState('');
   const { data } = useSongInfo(songId);
-  const cover = '';
 
   useEffect(() => {
     setAudioSrc(data.songSrc);
     setSongDetails(data.details);
+    if (data.poster) setSongPoster(data.poster);
   }, [audioSrc, data, songId]);
 
   const nextSongHandler = () => {
@@ -64,7 +65,7 @@ export const PlayerSection = () => {
         )}
       >
         <div className={clsx(styles.cover, isExpanded && styles.coverExpanded)}>
-          {cover}
+          <img src={songPoster} />
         </div>
         <div className={clsx(styles.title, isExpanded && styles.titleExpanded)}>
           {songDetails?.title}

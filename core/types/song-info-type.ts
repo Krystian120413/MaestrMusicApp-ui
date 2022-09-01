@@ -6,4 +6,5 @@ export type SongDetailsType = {
 export type SongInfoType = {
   songSrc: string;
   details?: SongDetailsType;
+  poster?: string;
 };

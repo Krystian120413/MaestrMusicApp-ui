@@ -15,3 +15,13 @@ export const getSongInfo = async (songId: number) => {
 
   return response.data;
 };
+
+export const getSongPoster = async (songId: number) => {
+  const response = await axios
+    .get(`${SongApiUrl}/songInfo/poster/${songId}`, {
+      responseType: 'arraybuffer',
+    })
+    .then((ress) => Buffer.from(ress.data, 'binary').toString('base64'));
+
+  return response;
+};
