@@ -1,4 +1,4 @@
-import { TabColor } from 'types/tab';
+import { TabColor } from 'types/tab-type';
 import { Tab } from 'components/tab/tab';
 import styles from './tabs.module.scss';
 

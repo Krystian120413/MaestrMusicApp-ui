@@ -12,6 +12,7 @@ type PlayerProps = {
   audioSrc?: string;
   expanded: boolean;
   onNextSong: () => void;
+  onPrevSong: () => void;
 };
 
 export const Player = ({
@@ -19,6 +20,7 @@ export const Player = ({
   audioSrc = '',
   expanded,
   onNextSong,
+  onPrevSong,
 }: PlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [trackProgress, setTrackProgress] = useState(0);
@@ -44,16 +46,15 @@ export const Player = ({
       else audioRef.current.pause();
       setDuration(audioRef.current.duration);
     }
-  }, [isPlaying]);
+  }, [isPlaying, audioRef.current?.src, audioRef.current?.duration]);
 
   useEffect(() => {
     const trackProgressUpdate = setInterval(() => {
       if (audioRef.current) {
         setTrackProgress(audioRef.current.currentTime);
         if (audioRef.current.currentTime === audioRef.current.duration) {
-          setIsPlaying(false);
           setDuration(0);
-          // onNextSong();
+          onNextSong();
         }
       }
     }, 1000);
@@ -116,6 +117,10 @@ export const Player = ({
             styles.prevButton,
             expanded && styles.prevButtonExpanded
           )}
+          onClick={() => {
+            onPrevSong();
+            setIsPlaying(false);
+          }}
         >
           prev
           <NextSongIcon />
@@ -139,7 +144,9 @@ export const Player = ({
             styles.nextButton,
             expanded && styles.nextButtonExpanded
           )}
-          onClick={() => onNextSong()}
+          onClick={() => {
+            onNextSong();
+          }}
         >
           next
           <NextSongIcon />

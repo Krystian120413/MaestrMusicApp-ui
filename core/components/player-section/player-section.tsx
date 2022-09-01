@@ -1,37 +1,32 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { SongInfoType } from 'types/song-info';
+import { useSongInfo } from 'hooks/useSongInfo';
+import { SongDetailsType } from 'types/song-info-type';
 import AddIcon from 'assets/icons/add-icon.svg';
 import BackIcon from 'assets/icons/back-icon.svg';
 import ExpandIcon from 'assets/icons/expand-icon.svg';
 import { Player } from 'components/player/player';
-import { getSongInfo, getSongSrc } from 'utils/getSong';
 import styles from './player-section.module.scss';
 
 export const PlayerSection = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [songId, setSongId] = useState(0);
   const [audioSrc, setAudioSrc] = useState('');
-  const [songInfo, setSongInfo] = useState<SongInfoType>({
-    title: '',
-    author: '',
-  });
+  const [songDetails, setSongDetails] = useState<SongDetailsType>();
+  const { data } = useSongInfo(songId);
   const cover = '';
 
-  const getSong = async () => {
-    const songDetails = await getSongInfo(songId);
-
-    setSongInfo(songDetails);
-  };
-
   useEffect(() => {
-    const song = getSongSrc(songId);
-    setAudioSrc(song);
-    getSong();
-  }, [audioSrc, songId]);
+    setAudioSrc(data.songSrc);
+    setSongDetails(data.details);
+  }, [audioSrc, data, songId]);
 
   const nextSongHandler = () => {
     setSongId((prevSongId) => prevSongId + 1);
+  };
+
+  const prevSongHandler = () => {
+    setSongId((prevSongId) => prevSongId - 1);
   };
 
   return (
@@ -72,18 +67,19 @@ export const PlayerSection = () => {
           {cover}
         </div>
         <div className={clsx(styles.title, isExpanded && styles.titleExpanded)}>
-          {songInfo.title}
+          {songDetails?.title}
         </div>
         <div
           className={clsx(styles.author, isExpanded && styles.authorExpanded)}
         >
-          {songInfo.author}
+          {songDetails?.author}
         </div>
       </div>
       <Player
         className={styles.playerWrapper}
         audioSrc={audioSrc}
         expanded={isExpanded}
+        onPrevSong={prevSongHandler}
         onNextSong={nextSongHandler}
       />
       <button
