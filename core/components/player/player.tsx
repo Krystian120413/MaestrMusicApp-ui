@@ -11,9 +11,15 @@ type PlayerProps = {
   className?: string;
   audioSrc?: string;
   expanded: boolean;
+  onNextSong: () => void;
 };
 
-export const Player = ({ className, audioSrc = '', expanded }: PlayerProps) => {
+export const Player = ({
+  className,
+  audioSrc = '',
+  expanded,
+  onNextSong,
+}: PlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [trackProgress, setTrackProgress] = useState(0);
   const [duration, setDuration] = useState(100);
@@ -47,6 +53,7 @@ export const Player = ({ className, audioSrc = '', expanded }: PlayerProps) => {
         if (audioRef.current.currentTime === audioRef.current.duration) {
           setIsPlaying(false);
           setDuration(0);
+          // onNextSong();
         }
       }
     }, 1000);
@@ -132,6 +139,7 @@ export const Player = ({ className, audioSrc = '', expanded }: PlayerProps) => {
             styles.nextButton,
             expanded && styles.nextButtonExpanded
           )}
+          onClick={() => onNextSong()}
         >
           next
           <NextSongIcon />

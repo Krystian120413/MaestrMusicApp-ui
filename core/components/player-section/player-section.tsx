@@ -1,26 +1,38 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
+import { SongInfoType } from 'types/song-info';
 import AddIcon from 'assets/icons/add-icon.svg';
 import BackIcon from 'assets/icons/back-icon.svg';
 import ExpandIcon from 'assets/icons/expand-icon.svg';
 import { Player } from 'components/player/player';
-import getSong from 'utils/getSong';
+import { getSongInfo, getSongSrc } from 'utils/getSong';
 import styles from './player-section.module.scss';
 
 export const PlayerSection = () => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [songId, setSongId] = useState(0);
   const [audioSrc, setAudioSrc] = useState('');
-  const [songInfo, setSongInfo] = useState({
+  const [songInfo, setSongInfo] = useState<SongInfoType>({
     title: '',
     author: '',
   });
   const cover = '';
 
+  const getSong = async () => {
+    const songDetails = await getSongInfo(songId);
+
+    setSongInfo(songDetails);
+  };
+
   useEffect(() => {
-    const song = getSong();
-    setAudioSrc(song.song);
-    console.log(song.title);
-  }, [audioSrc]);
+    const song = getSongSrc(songId);
+    setAudioSrc(song);
+    getSong();
+  }, [audioSrc, songId]);
+
+  const nextSongHandler = () => {
+    setSongId((prevSongId) => prevSongId + 1);
+  };
 
   return (
     <div className={clsx(styles.wrapper, isExpanded && styles.wrapperExpanded)}>
@@ -72,6 +84,7 @@ export const PlayerSection = () => {
         className={styles.playerWrapper}
         audioSrc={audioSrc}
         expanded={isExpanded}
+        onNextSong={nextSongHandler}
       />
       <button
         type="button"
