@@ -122,12 +122,10 @@
   }
 }
 
-.cover {
+.cover-wrapper {
   grid-area: cover;
   width: 54px;
   height: 54px;
-  background-color: var(--background-secondary-color);
-  border-radius: 8px;
 
   @include md {
     width: 84px;
@@ -143,6 +141,10 @@
       width: 480px;
     }
   }
+}
+
+.cover {
+  border-radius: 8px;
 }
 
 .title {
@@ -210,5 +212,9 @@
   @include md {
     width: 60%;
     max-width: 1000px;
+  }
+
+  &--expanded {
+    width: 100%;
   }
 }

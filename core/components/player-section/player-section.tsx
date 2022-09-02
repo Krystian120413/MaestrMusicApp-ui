@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { useSongInfo } from 'hooks/useSongInfo';
+import Image from 'next/image';
 import { SongDetailsType } from 'types/song-info-type';
 import AddIcon from 'assets/icons/add-icon.svg';
 import BackIcon from 'assets/icons/back-icon.svg';
@@ -64,8 +65,20 @@ export const PlayerSection = () => {
           isExpanded && styles.songDescriptionWrapperExpanded
         )}
       >
-        <div className={clsx(styles.cover, isExpanded && styles.coverExpanded)}>
-          <img src={songPoster} />
+        <div
+          className={clsx(
+            styles.coverWrapper,
+            isExpanded && styles.coverWrapperExpanded
+          )}
+        >
+          <Image
+            className={styles.cover}
+            src={`data:;base64,${songPoster}`}
+            width="100%"
+            height="100%"
+            layout="responsive"
+            alt="okładka"
+          />
         </div>
         <div className={clsx(styles.title, isExpanded && styles.titleExpanded)}>
           {songDetails?.title}
@@ -77,7 +90,10 @@ export const PlayerSection = () => {
         </div>
       </div>
       <Player
-        className={styles.playerWrapper}
+        className={clsx(
+          styles.playerWrapper,
+          isExpanded && styles.playerWrapperExpanded
+        )}
         audioSrc={audioSrc}
         expanded={isExpanded}
         onPrevSong={prevSongHandler}

@@ -21,7 +21,7 @@ export const getSongPoster = async (songId: number) => {
     .get(`${SongApiUrl}/songInfo/poster/${songId}`, {
       responseType: 'arraybuffer',
     })
-    .then((ress) => Buffer.from(ress.data, 'binary').toString('base64'));
+    .then((res) => Buffer.from(res.data, 'binary').toString('base64'));
 
   return response;
 };
