@@ -17,6 +17,9 @@ export const PlayerSection = () => {
   const [songPoster, setSongPoster] = useState('');
   const { data } = useSongInfo(songId);
 
+  const [isLooped, setIsLooped] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+
   useEffect(() => {
     setAudioSrc(data.songSrc);
     setSongDetails(data.details);
@@ -98,6 +101,8 @@ export const PlayerSection = () => {
         expanded={isExpanded}
         onPrevSong={prevSongHandler}
         onNextSong={nextSongHandler}
+        looped={{ isLooped, setIsLooped }}
+        liked={{ isLiked, setIsLiked }}
       />
       <button
         type="button"

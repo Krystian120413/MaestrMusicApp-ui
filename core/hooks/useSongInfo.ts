@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { SongDetailsType, SongInfoType } from 'types/song-info-type';
 import { getSongInfo, getSongPoster, getSongSrc } from 'utils/Axios';
 
@@ -8,10 +9,16 @@ export const useSongInfo = (songId: number) => {
   const [songPoster, setSongPoster] = useState('');
 
   const getAnswer = async () => {
-    const songDetails = await getSongInfo(songId);
-    const songCover = await getSongPoster(songId);
-    setSongInfo(songDetails);
-    setSongPoster(songCover);
+    try {
+      const songDetails = await getSongInfo(songId);
+      const songCover = await getSongPoster(songId);
+      setSongInfo(songDetails);
+      setSongPoster(songCover);
+    } catch (error) {
+      toast.error('Something went wrong', {
+        autoClose: 3000,
+      });
+    }
   };
 
   useEffect(() => {

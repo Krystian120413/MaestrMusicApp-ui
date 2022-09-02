@@ -84,6 +84,14 @@
   }
 }
 
+.loop-icon {
+  color: var(--primary-icon-color);
+
+  &--activate {
+    color: var(--primary-green-color);
+  }
+}
+
 .prev-button {
   display: none;
   transform: rotateY(180deg);
@@ -118,5 +126,13 @@
 
   &--expanded {
     display: block;
+  }
+}
+
+.heart-icon {
+  color: var(--primary-icon-color);
+
+  &-activate {
+    color: var(--primary-red-color);
   }
 }
