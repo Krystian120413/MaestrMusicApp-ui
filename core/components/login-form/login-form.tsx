@@ -1,33 +1,46 @@
 import Link from 'next/link';
+import PlayIcon from 'assets/icons/play-login-icon.svg';
+import PrevIcon from 'assets/icons/prev-login-icon.svg';
 import styles from './login-form.module.scss';
 
 export const LoginForm = () => {
   return (
     <div className={styles.wrapper}>
       <form className={styles.form}>
-        <label className={styles.emailLabel} htmlFor="email">
-          E-mail
-        </label>
         <input
           type="email"
-          className={styles.emailInput}
+          className={styles.input}
           id="email"
           name="email"
+          placeholder="Email"
         />
-        <label className={styles.passwdLabel} htmlFor="userPassword">
-          Password
-        </label>
         <input
           type="password"
-          className={styles.passwdInput}
+          className={styles.input}
           id="userPassword"
           name="userPassword"
+          placeholder="Password"
         />
-        <button className={styles.submitBtn}>
-          <Link href="/user-panel">Sign In</Link>
-        </button>
+        <div className={styles.buttonWrapper}>
+          <span className={styles.prev}>
+            <PrevIcon />
+          </span>
+          <button className={styles.submitButton}>
+            icon
+            <PlayIcon />
+          </button>
+          <span className={styles.next}>
+            <PrevIcon className={styles.nextIcon} />
+          </span>
+        </div>
       </form>
-      {/* <SignInLink /> */}
+      <p className={styles.newAccountParagraph}>
+        Create a{' '}
+        <Link href="/user-panel">
+          <a className={styles.newAccountLink}>new account</a>
+        </Link>
+      </p>
+      <h3 className={styles.instruction}>Click Play to LogIn</h3>
     </div>
   );
 };
