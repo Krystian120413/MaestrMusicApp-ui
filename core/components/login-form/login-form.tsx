@@ -6,7 +6,7 @@ import styles from './login-form.module.scss';
 export const LoginForm = () => {
   return (
     <div className={styles.wrapper}>
-      <form className={styles.form}>
+      <form action="/auth" className={styles.form}>
         <input
           type="email"
           className={styles.input}
