@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { TabColor } from 'types/tab';
+import { TabColor } from 'types/tab-type';
 import styles from './tab.module.scss';
 
 type TabProps = {

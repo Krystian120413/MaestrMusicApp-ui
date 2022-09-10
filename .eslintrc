@@ -13,6 +13,7 @@
     "simple-import-sort"
   ],
   "rules": {
+    "jsx-a11y/anchor-is-valid": "off",
     "import/no-unresolved": "off",
     "import/absolute-first": "off",
     "import/prefer-default-export": "off",

@@ -17,30 +17,31 @@
     padding: 0 24px;
   }
 
-  @include xl {
-    padding: 0 100px;
-  }
-
-  @include xxl {
-    padding: 0 200px;
-  }
-
   &--expanded {
     height: 100vh;
     flex-direction: column;
     align-items: center;
+
+    @include md {
+      padding: 0 200px;
+    }
   }
 }
 
 .expand-button {
   display: none;
+  font-size: 0;
+  width: 64px;
+  
 
   @include md {
     display: block;
+    margin-left: 40px;
   }
 
   &--expanded {
     display: none;
+    margin: 0;
   }
 }
 
@@ -93,7 +94,7 @@
     / 54px auto;
 
   @include md {
-    width: 24%;
+    width: 30%;
     grid-template:
       "cover title" 1fr
       "cover author" 1fr
@@ -121,12 +122,10 @@
   }
 }
 
-.cover {
+.cover-wrapper {
   grid-area: cover;
   width: 54px;
   height: 54px;
-  background-color: var(--background-secondary-color);
-  border-radius: 8px;
 
   @include md {
     width: 84px;
@@ -144,14 +143,22 @@
   }
 }
 
+.cover {
+  border-radius: 8px;
+}
+
 .title {
   grid-area: title;
   font-size: 1.8rem;
   font-weight: 700;
   padding-left: 16px;
+  max-height: 40px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   @include md {
-    font-size: 3.6rem;
+    font-size: 2.4rem;
+    max-width: 400px;
   }
 
   &--expanded {
@@ -162,7 +169,8 @@
 
     @include md {
       font-size: 4.8rem;
-      width: 400px;
+      max-width: 600px;
+      max-height: 240px;
       text-align: center;
     }
   }
@@ -174,9 +182,12 @@
   font-size: 1.2rem;
   font-weight: 400;
   padding-left: 16px;
+  max-height: 40px;
+  text-overflow: ellipsis;
 
   @include md {
-    font-size: 2.4rem;
+    font-size: 2rem;
+    max-width: 400px;
   }
 
   &--expanded {
@@ -187,6 +198,7 @@
     @include md {
       font-size: 3.2rem;
       width: 400px;
+      max-height: 240px;
       text-align: center;
     }
   }
@@ -202,5 +214,9 @@
   @include md {
     width: 60%;
     max-width: 1000px;
+  }
+
+  &--expanded {
+    width: 100%;
   }
 }

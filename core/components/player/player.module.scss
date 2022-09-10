@@ -56,11 +56,11 @@
     align-items: center;
 
     @include md {
-      margin-right: 80px;
+      margin-right: 8px;
     }
 
     &--expanded {
-      margin-top: 64px;
+      margin: 64px auto 0;
     }
   }
 
@@ -81,6 +81,14 @@
 
   &--expanded {
     display: block;
+  }
+}
+
+.loop-icon {
+  color: var(--primary-icon-color);
+
+  &--activate {
+    color: var(--primary-green-color);
   }
 }
 
@@ -118,5 +126,13 @@
 
   &--expanded {
     display: block;
+  }
+}
+
+.heart-icon {
+  color: var(--primary-icon-color);
+
+  &-activate {
+    color: var(--primary-red-color);
   }
 }

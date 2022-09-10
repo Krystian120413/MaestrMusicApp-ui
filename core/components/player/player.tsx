@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import HeartIcon from 'assets/icons/heart-icon.svg';
 import LoopIcon from 'assets/icons/loop-icon.svg';
@@ -11,12 +11,30 @@ type PlayerProps = {
   className?: string;
   audioSrc?: string;
   expanded: boolean;
+  looped: {
+    isLooped: boolean;
+    setIsLooped: React.Dispatch<React.SetStateAction<boolean>>;
+  };
+  liked: {
+    isLiked: boolean;
+    setIsLiked: React.Dispatch<React.SetStateAction<boolean>>;
+  };
+  onNextSong: () => void;
+  onPrevSong: () => void;
 };
 
-export const Player = ({ className, audioSrc = '', expanded }: PlayerProps) => {
+export const Player = ({
+  className,
+  audioSrc = '',
+  expanded,
+  looped,
+  liked,
+  onNextSong,
+  onPrevSong,
+}: PlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [trackProgress, setTrackProgress] = useState(0);
-  const [duration, setDuration] = useState(100);
+  const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -38,15 +56,15 @@ export const Player = ({ className, audioSrc = '', expanded }: PlayerProps) => {
       else audioRef.current.pause();
       setDuration(audioRef.current.duration);
     }
-  }, [isPlaying]);
+  }, [isPlaying, audioRef.current?.src, audioRef.current?.duration]);
 
   useEffect(() => {
     const trackProgressUpdate = setInterval(() => {
       if (audioRef.current) {
         setTrackProgress(audioRef.current.currentTime);
         if (audioRef.current.currentTime === audioRef.current.duration) {
-          setIsPlaying(false);
           setDuration(0);
+          onNextSong();
         }
       }
     }, 1000);
@@ -98,9 +116,17 @@ export const Player = ({ className, audioSrc = '', expanded }: PlayerProps) => {
             styles.loopButton,
             expanded && styles.loopButtonExpanded
           )}
+          onClick={() =>
+            looped.setIsLooped((prevLooppedState) => !prevLooppedState)
+          }
         >
           loop
-          <LoopIcon />
+          <LoopIcon
+            className={clsx(
+              styles.loopIcon,
+              looped.isLooped && styles.loopIconActivate
+            )}
+          />
         </button>
         <button
           type="button"
@@ -109,6 +135,9 @@ export const Player = ({ className, audioSrc = '', expanded }: PlayerProps) => {
             styles.prevButton,
             expanded && styles.prevButtonExpanded
           )}
+          onClick={() => {
+            onPrevSong();
+          }}
         >
           prev
           <NextSongIcon />
@@ -132,6 +161,9 @@ export const Player = ({ className, audioSrc = '', expanded }: PlayerProps) => {
             styles.nextButton,
             expanded && styles.nextButtonExpanded
           )}
+          onClick={() => {
+            onNextSong();
+          }}
         >
           next
           <NextSongIcon />
@@ -143,9 +175,15 @@ export const Player = ({ className, audioSrc = '', expanded }: PlayerProps) => {
             styles.heartButton,
             expanded && styles.heartButtonExpanded
           )}
+          onClick={() => liked.setIsLiked((prevLikedState) => !prevLikedState)}
         >
           heart
-          <HeartIcon />
+          <HeartIcon
+            className={clsx(
+              styles.heartIcon,
+              liked.isLiked && styles.heartIconActivate
+            )}
+          />
         </button>
       </div>
     </div>
