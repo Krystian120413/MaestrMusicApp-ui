@@ -1,0 +1,95 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "airbnb",
+    "prettier",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "unused-imports",
+    "simple-import-sort"
+  ],
+  "rules": {
+    "jsx-a11y/anchor-is-valid": "off",
+    "import/no-unresolved": "off",
+    "import/absolute-first": "off",
+    "import/prefer-default-export": "off",
+    "unused-imports/no-unused-imports": "error",
+    "react/require-default-props": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/no-danger": "off",
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function"
+      }
+    ],
+    "simple-import-sort/imports": [
+      "error",
+      {
+        "groups": [
+          [
+            "^react",
+            "^\\w",
+            "^assets",
+            "^components",
+            "^styles",
+            "^utils",
+            "^\\.",
+            "\\.scss$"
+          ]
+        ]
+      }
+    ],
+    "react/button-has-type": 0,
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "required": {
+          "some": [
+            "nesting",
+            "id"
+          ]
+        }
+      }
+    ],
+    "jsx-a11y/label-has-for": [
+      "error",
+      {
+        "required": {
+          "some": [
+            "nesting",
+            "id"
+          ]
+        }
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.ts",
+        "*.tsx"
+      ],
+      "extends": [
+        "airbnb-typescript"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      },
+      "rules": {
+        "@typescript-eslint/indent": "off",
+        "@typescript-eslint/comma-dangle": "off",
+        "import/no-extraneous-dependencies": "off"
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "next-env.d.ts"
+  ]
+}
