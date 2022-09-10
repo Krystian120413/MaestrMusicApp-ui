@@ -1,8 +1,13 @@
 import axios from 'axios';
 import { ApiUrl } from 'helpers/constants/ApiUrl';
-import { SongDetailsType } from 'types/song-info-type';
+import { SongDetailsType, SongType } from 'types/song-info-type';
 
 const SongApiUrl = `${ApiUrl}/songs`;
+
+export const getAllSongs = async () => {
+  const response = await axios.get<SongType[]>(`${SongApiUrl}`);
+  return response.data;
+};
 
 export const getSongSrc = (songId: number) => {
   return `${SongApiUrl}/${songId}`;
@@ -10,7 +15,7 @@ export const getSongSrc = (songId: number) => {
 
 export const getSongInfo = async (songId: number) => {
   const response = await axios.get<SongDetailsType>(
-    `${SongApiUrl}/songInfo/${songId}`
+    `${SongApiUrl}-info/${songId}`
   );
 
   return response.data;
@@ -18,7 +23,7 @@ export const getSongInfo = async (songId: number) => {
 
 export const getSongPoster = async (songId: number) => {
   const response = await axios
-    .get(`${SongApiUrl}/songInfo/poster/${songId}`, {
+    .get(`${SongApiUrl}-info/posters/${songId}`, {
       responseType: 'arraybuffer',
     })
     .then((res) => Buffer.from(res.data, 'binary').toString('base64'));

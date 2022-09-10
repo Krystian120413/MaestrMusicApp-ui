@@ -64,7 +64,7 @@ export const Player = ({
         setTrackProgress(audioRef.current.currentTime);
         if (audioRef.current.currentTime === audioRef.current.duration) {
           setDuration(0);
-          if (!looped.isLooped) onNextSong();
+          onNextSong();
         }
       }
     }, 1000);

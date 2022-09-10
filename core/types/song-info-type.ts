@@ -8,3 +8,10 @@ export type SongInfoType = {
   details?: SongDetailsType;
   poster?: string;
 };
+
+export type SongType = {
+  id: number;
+  title: string;
+  author: string;
+  genre: string[];
+};
