@@ -1,5 +1,6 @@
 .wrapper {
   width: 100%;
+  min-height: 76vh;
   display: grid;
   grid-template:
     "playlists liked" auto
@@ -8,6 +9,7 @@
     "user-radio user-radio" auto /
     1fr 1fr;
   gap: 16px;
+  align-content: flex-start;
 }
 
 .playlists {
@@ -31,4 +33,20 @@
 .user-radio {
   grid-area: user-radio;
   height: 80px;
+}
+
+.opened-tab {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+
+  &__back-button {
+    color: var(--font-primary-color);
+    font-size: 0;
+    height: 40px;
+    width: 32px;
+  }
 }
