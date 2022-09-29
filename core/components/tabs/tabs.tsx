@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { LikedSongsPanel } from 'liked-songs-panel';
 import { TabColor } from 'types/tab-type';
 import BackIcon from 'assets/icons/back-icon.svg';
 import { Tab } from 'components/tab/tab';
@@ -15,7 +16,7 @@ const tabs = [
     title: 'LIKED',
     backgroundColor: TabColor.GREEN,
     className: styles.liked,
-    component: 'liked',
+    component: <LikedSongsPanel />,
   },
   {
     title: 'GENRES',
