@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { useSongInfo } from 'hooks/useSongInfo';
-import Image from 'next/image';
 import { SongDetailsType } from 'types/song-info-type';
 import AddIcon from 'assets/icons/add-icon.svg';
 import BackIcon from 'assets/icons/back-icon.svg';
 import ExpandIcon from 'assets/icons/expand-icon.svg';
 import { Player } from 'components/player/player';
+import { SongDescription } from 'components/song-description';
 import styles from './player-section.module.scss';
 
 export const PlayerSection = () => {
@@ -62,36 +62,12 @@ export const PlayerSection = () => {
           </button>
         </div>
       )}
-      <div
-        className={clsx(
-          styles.songDescriptionWrapper,
-          isExpanded && styles.songDescriptionWrapperExpanded
-        )}
-      >
-        <div
-          className={clsx(
-            styles.coverWrapper,
-            isExpanded && styles.coverWrapperExpanded
-          )}
-        >
-          <Image
-            className={styles.cover}
-            src={`data:;base64,${songPoster}`}
-            width="100%"
-            height="100%"
-            layout="responsive"
-            alt="okładka"
-          />
-        </div>
-        <div className={clsx(styles.title, isExpanded && styles.titleExpanded)}>
-          {songDetails?.title}
-        </div>
-        <div
-          className={clsx(styles.author, isExpanded && styles.authorExpanded)}
-        >
-          {songDetails?.author}
-        </div>
-      </div>
+      <SongDescription
+        title={songDetails?.title}
+        author={songDetails?.author}
+        isExpanded={isExpanded}
+        posterSrc={songPoster}
+      />
       <Player
         className={clsx(
           styles.playerWrapper,

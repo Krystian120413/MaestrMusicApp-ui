@@ -1,0 +1,17 @@
+.song-in-list-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 120%;
+
+  &__id {
+    color: var(--primary-gray-color);
+  }
+
+  &__duration {
+    color: var(--primary-gray-color);
+  }
+}
