@@ -16,3 +16,28 @@
     color: var(--primary-gray-color);
   }
 }
+
+.button {
+  padding: 0 15px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.play-button {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 4px;
+
+  &--pause {
+    width: 32px;
+    height: 44px;
+    align-self: center;
+    justify-self: center;
+  }
+}

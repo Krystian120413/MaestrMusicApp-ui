@@ -1,7 +1,15 @@
-import { SongInList, SongInListType } from 'components/song-in-list';
+import { useState } from 'react';
+import { SongInList } from 'components/song-in-list';
 import styles from './liked-songs-panel.module.scss';
 
-const songs: SongInListType[] = [
+type SongType = {
+  title?: string;
+  author?: string;
+  posterSrc?: string;
+  duration?: string;
+};
+
+const songs: SongType[] = [
   {
     title: 'dupa',
     author: 'kupa',
@@ -65,6 +73,7 @@ const songs: SongInListType[] = [
 ];
 
 export const LikedSongsPanel = () => {
+  const [isSongPlaying, setIsSongPlaying] = useState(false);
   return (
     <div className={styles.likedWrapper}>
       {songs.map(({ title, author, posterSrc, duration }, index) => (
