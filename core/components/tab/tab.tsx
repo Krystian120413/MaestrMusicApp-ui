@@ -6,7 +6,7 @@ import styles from './tab.module.scss';
 type TabProps = {
   className?: string;
   title: string;
-  backgroundColor?: TabColor;
+  backgroundColor?: string | TabColor;
   onClick: () => void;
 };
 
@@ -35,7 +35,7 @@ export const Tab = ({
 
   return (
     <div className={clsx(styles.wrapper, className)}>
-      <button type="button" className={styles.button} onClick={() => onClick()}>
+      <button type="button" className={styles.button} onClick={onClick}>
         <div className={clsx(styles.card, changeCardColor())}>
           <h3 className={styles.cardTitle}>{title}</h3>
         </div>
