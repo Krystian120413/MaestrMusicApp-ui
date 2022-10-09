@@ -1,26 +1,70 @@
+import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import PlayIcon from 'assets/icons/play-login-icon.svg';
 import PrevIcon from 'assets/icons/prev-login-icon.svg';
+import { ALL_CHAR_REGEXP, EMAIL_REGEXP } from 'utils/regexps';
 import styles from './login-form.module.scss';
 
+type LoginValues = {
+  email: string;
+  password: string;
+};
+
 export const LoginForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<LoginValues>();
+
+  const onSubmit = (data: LoginValues) => {
+    console.log(data);
+    reset();
+  };
+
   return (
     <div className={styles.wrapper}>
-      <form action="/auth" className={styles.form}>
-        <input
-          type="email"
-          className={styles.input}
-          id="email"
-          name="email"
-          placeholder="Email"
-        />
-        <input
-          type="password"
-          className={styles.input}
-          id="userPassword"
-          name="userPassword"
-          placeholder="Password"
-        />
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.inputWrapper}>
+          <input
+            className={styles.input}
+            type="email"
+            placeholder="Email"
+            {...register('email', {
+              pattern: {
+                value: EMAIL_REGEXP,
+                message: 'Invalid email address',
+              },
+              required: 'Required',
+            })}
+          />
+          {!!errors && (
+            <p className={styles.inputError}>
+              {errors.email?.message?.toString()}
+            </p>
+          )}
+        </div>
+        <div className={styles.inputWrapper}>
+          <input
+            className={styles.input}
+            type="password"
+            placeholder="Password"
+            {...register('password', {
+              pattern: ALL_CHAR_REGEXP,
+              required: 'Required',
+              minLength: {
+                value: 8,
+                message: 'Password min. length: 8',
+              },
+            })}
+          />
+          {!!errors && (
+            <p className={styles.inputError}>
+              {errors.password?.message?.toString()}
+            </p>
+          )}
+        </div>
         <div className={styles.buttonWrapper}>
           <span className={styles.prev}>
             <PrevIcon />
