@@ -17,7 +17,7 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     } else {
       router.push('/');
     }
-  }, [authContext?.isAuthenticated]);
+  }, [authContext?.isAuthenticated, authContext]);
 
   return (
     <div className={styles.wrapper}>

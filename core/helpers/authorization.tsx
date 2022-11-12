@@ -8,6 +8,7 @@ import {
 } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import instanceAxios from 'services/api';
 import TokenService from 'services/token/service';
 import { Paths, UserDataType } from 'services/user/types';
@@ -29,6 +30,7 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserDataType | null>();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const router = useRouter();
 
   const login = async (email: string, password: string) => {
     try {
@@ -51,6 +53,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       token,
     });
     delete instanceAxios.defaults.headers.Authorization;
+    TokenService.removeUser();
+    router.push('/');
   };
 
   useEffect(() => {

@@ -11,7 +11,7 @@ export type Logincredendials = {
 };
 
 export type UserDataType = {
-  username?: string;
+  name?: string;
   userId: number;
   accessToken: string;
   refreshToken: string;
