@@ -1,8 +1,9 @@
 .global-wrapper {
   max-width: 1440px;
   margin: auto;
-  overflow: hidden;
+  overflow-x: hidden;
   position: relative;
+
 }
 
 .content-wrapper {
