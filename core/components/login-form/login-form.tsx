@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useAuth } from 'helpers/authorization';
 import Link from 'next/link';
 import PlayIcon from 'assets/icons/play-login-icon.svg';
 import PrevIcon from 'assets/icons/prev-login-icon.svg';
@@ -15,12 +16,11 @@ export const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<LoginValues>();
+  const auth = useAuth();
 
   const onSubmit = (data: LoginValues) => {
-    console.log(data);
-    reset();
+    auth?.login(data.email, data.password);
   };
 
   return (
