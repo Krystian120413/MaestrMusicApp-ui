@@ -80,7 +80,7 @@ export const LoginForm = () => {
       </form>
       <p className={styles.newAccountParagraph}>
         Create a{' '}
-        <Link href="/user-panel">
+        <Link href="/signup">
           <a className={styles.newAccountLink}>new account</a>
         </Link>
       </p>

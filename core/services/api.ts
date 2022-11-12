@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-param-reassign */
 import axios from 'axios';
 import { ApiAuthUrl } from 'helpers/constants/ApiUrl';
 import TokenService from './token/service';

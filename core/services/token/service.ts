@@ -32,7 +32,7 @@ const setUser = (user: UserDataType) => {
   localStorage.setItem(Keys.ACCESS_TOKEN, user.accessToken);
   localStorage.setItem(Keys.REFRESH_TOKEN, user.refreshToken);
   localStorage.setItem(Keys.USER_ID, String(user.userId));
-  localStorage.setItem(Keys.USERNAME, String(user.username));
+  localStorage.setItem(Keys.USERNAME, String(user.name));
 };
 
 const removeUser = () => {
