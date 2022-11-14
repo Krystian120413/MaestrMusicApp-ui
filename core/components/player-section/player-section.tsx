@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { useSongInfo } from 'hooks/useSongInfo';
-import { SongDetailsType } from 'types/song-info-type';
+import { SongDetailsType, SongIdGlobalType } from 'types/song-info-type';
 import AddIcon from 'assets/icons/add-icon.svg';
 import BackIcon from 'assets/icons/back-icon.svg';
 import ExpandIcon from 'assets/icons/expand-icon.svg';
@@ -9,13 +9,22 @@ import { Player } from 'components/player/player';
 import { SongDescription } from 'components/song-description';
 import styles from './player-section.module.scss';
 
-export const PlayerSection = () => {
+type PlayerSectionType = SongIdGlobalType & {
+  className?: string;
+};
+
+export const PlayerSection = ({
+  playingSongId,
+  setPlayingSongId,
+  isSongPlaying,
+  setIsSongPlaying,
+  className,
+}: PlayerSectionType) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [songId, setSongId] = useState(0);
   const [audioSrc, setAudioSrc] = useState('');
   const [songDetails, setSongDetails] = useState<SongDetailsType>();
   const [songPoster, setSongPoster] = useState('');
-  const { data } = useSongInfo(songId);
+  const { data } = useSongInfo(playingSongId);
 
   const [isLooped, setIsLooped] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
@@ -24,18 +33,24 @@ export const PlayerSection = () => {
     setAudioSrc(data.songSrc);
     setSongDetails(data.details);
     if (data.poster) setSongPoster(data.poster);
-  }, [audioSrc, data, songId]);
+  }, [audioSrc, data, playingSongId]);
 
   const nextSongHandler = () => {
-    setSongId((prevSongId) => prevSongId + 1);
+    setPlayingSongId((prevSongId: number) => prevSongId + 1);
   };
 
   const prevSongHandler = () => {
-    setSongId((prevSongId) => prevSongId - 1);
+    setPlayingSongId((prevSongId: number) => prevSongId - 1);
   };
 
   return (
-    <div className={clsx(styles.wrapper, isExpanded && styles.wrapperExpanded)}>
+    <div
+      className={clsx(
+        styles.wrapper,
+        isExpanded && styles.wrapperExpanded,
+        className
+      )}
+    >
       <button
         type="button"
         className={clsx(
@@ -79,6 +94,8 @@ export const PlayerSection = () => {
         onNextSong={nextSongHandler}
         looped={{ isLooped, setIsLooped }}
         liked={{ isLiked, setIsLiked }}
+        isSongPlaying={isSongPlaying}
+        setIsSongPlaying={setIsSongPlaying}
       />
       <button
         type="button"

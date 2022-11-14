@@ -1,19 +1,23 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
+import { useSongInfo } from 'hooks/useSongInfo';
 import PauseIcon from 'assets/icons/pause-icon.svg';
 import PlayIcon from 'assets/icons/play-icon.svg';
 import { SongDescription } from 'components/song-description';
 import styles from './song-in-list.module.scss';
 
 type SongInListType = {
-  songId?: number;
+  songId: number;
   index?: number;
   title?: string;
   author?: string;
-  posterSrc?: string;
   duration?: string;
+  playingSongId: number;
+  setPlayingSongId: (arg: number) => void;
   isSongPlaying: boolean;
-  onClick: () => void;
+  setIsSongPlaying: (
+    isPlaying: boolean | ((prevState: boolean) => boolean)
+  ) => void;
 };
 
 export const SongInList = ({
@@ -21,22 +25,21 @@ export const SongInList = ({
   index,
   title,
   author,
-  posterSrc,
   duration = '00:00',
+  playingSongId,
+  setPlayingSongId,
   isSongPlaying,
-  onClick,
+  setIsSongPlaying,
 }: SongInListType) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [playingSongId, setPlayingSongId] = useState(songId);
+  const [isThisSongPlaying, setIsThisSongPlaying] = useState(
+    isSongPlaying && playingSongId === songId
+  );
+  const data = useSongInfo(songId);
 
   useEffect(() => {
-    setPlayingSongId(songId);
-  }, [songId]);
-
-  useEffect(() => {
-    if (isSongPlaying) setIsPlaying(true);
-    else setIsPlaying(false);
-  }, [isSongPlaying]);
+    if (isSongPlaying && playingSongId === songId) setIsThisSongPlaying(true);
+    else setIsThisSongPlaying(false);
+  }, [isSongPlaying, playingSongId]);
 
   return (
     <div className={styles.songInListWrapper}>
@@ -44,11 +47,13 @@ export const SongInList = ({
         type="button"
         className={clsx(styles.button, styles.playButton)}
         onClick={() => {
-          onClick();
-          setIsPlaying((prevState) => !prevState);
+          setIsSongPlaying((prevIsPlaying) =>
+            songId === playingSongId ? !prevIsPlaying : true
+          );
+          setPlayingSongId(songId);
         }}
       >
-        {isPlaying ? (
+        {isThisSongPlaying ? (
           <PauseIcon className={styles.playButtonPause} />
         ) : (
           <PlayIcon className={styles.playButton} />
@@ -56,7 +61,11 @@ export const SongInList = ({
         play/pause
       </button>
       <span className={styles.songInListWrapperId}>{index}</span>
-      <SongDescription title={title} author={author} posterSrc={posterSrc} />
+      <SongDescription
+        title={title}
+        author={author}
+        posterSrc={data.data.poster}
+      />
       <span className={styles.songInListWrapperDuration}>{duration}</span>
     </div>
   );

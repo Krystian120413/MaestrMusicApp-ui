@@ -1,11 +1,11 @@
-import axios from 'axios';
 import { ApiUrl } from 'helpers/constants/ApiUrl';
+import instanceAxios from 'services/api';
 import { SongDetailsType, SongType } from 'types/song-info-type';
 
 const SongApiUrl = `${ApiUrl}/songs`;
 
 export const getAllSongs = async () => {
-  const response = await axios.get<SongType[]>(`${SongApiUrl}`);
+  const response = await instanceAxios.get<SongType[]>(`${SongApiUrl}`);
   return response.data;
 };
 
@@ -14,7 +14,7 @@ export const getSongSrc = (songId: number) => {
 };
 
 export const getSongInfo = async (songId: number) => {
-  const response = await axios.get<SongDetailsType>(
+  const response = await instanceAxios.get<SongDetailsType>(
     `${SongApiUrl}-info/${songId}`
   );
 
@@ -22,7 +22,7 @@ export const getSongInfo = async (songId: number) => {
 };
 
 export const getSongPoster = async (songId: number) => {
-  const response = await axios
+  const response = await instanceAxios
     .get(`${SongApiUrl}-info/posters/${songId}`, {
       responseType: 'arraybuffer',
     })

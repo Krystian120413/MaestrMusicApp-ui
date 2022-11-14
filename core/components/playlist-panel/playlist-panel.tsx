@@ -1,34 +1,32 @@
-import { useState } from 'react';
+import { SongIdGlobalType, SongType } from 'types/song-info-type';
 import { SongInList } from 'components/song-in-list';
 import styles from './playlist-panel.module.scss';
 
-export type SongType = {
-  songId?: number;
-  title?: string;
-  author?: string;
-  posterSrc?: string;
-  duration?: string;
-};
-
-type PlaylistPanelProps = {
+type PlaylistPanelProps = SongIdGlobalType & {
   songs: SongType[];
 };
 
-export const PlaylistPanel = ({ songs }: PlaylistPanelProps) => {
-  const [playingSongIndex, setPlayingSongIndex] = useState(2);
+export const PlaylistPanel = ({
+  songs,
+  playingSongId,
+  setPlayingSongId,
+  isSongPlaying,
+  setIsSongPlaying,
+}: PlaylistPanelProps) => {
   return (
     <div className={styles.playlistWrapper}>
-      {songs.map(({ title, author, posterSrc, duration, songId }, index) => (
+      {songs.map(({ title, author, duration, id }, index) => (
         <SongInList
           key={title}
-          songId={songId}
+          songId={id}
           index={index + 1}
           title={title}
           author={author}
-          posterSrc={posterSrc}
-          duration={duration}
-          isSongPlaying={playingSongIndex === index}
-          onClick={() => setPlayingSongIndex(index)}
+          duration="02:37"
+          isSongPlaying={isSongPlaying}
+          playingSongId={playingSongId}
+          setPlayingSongId={setPlayingSongId}
+          setIsSongPlaying={setIsSongPlaying}
         />
       ))}
     </div>

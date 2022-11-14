@@ -1,70 +1,29 @@
-import {
-  PlaylistPanel,
-  SongType,
-} from 'components/playlist-panel/playlist-panel';
+import clsx from 'clsx';
+import { useAllSongs } from 'hooks/useAllSongs';
+import { SongIdGlobalType } from 'types/song-info-type';
+import { PlaylistPanel } from 'components/playlist-panel/playlist-panel';
 import styles from './liked-songs-panel.module.scss';
 
-const songs: SongType[] = [
-  {
-    title: 'piosenka1',
-    author: 'autor',
-    posterSrc: 'aleCo',
-    duration: '21:37',
-  },
-  {
-    title: 'piosenka2',
-    author: 'autor',
-    posterSrc: 'aleCo',
-    duration: '21:37',
-  },
-  {
-    title: 'piosenka3',
-    author: 'autor',
-    posterSrc: 'aleCo',
-    duration: '21:37',
-  },
-  {
-    title: 'piosenka4',
-    author: 'autor',
-    posterSrc: 'aleCo',
-    duration: '21:37',
-  },
-  {
-    title: 'piosenka5',
-    author: 'autor',
-    posterSrc: 'aleCo',
-    duration: '21:37',
-  },
-  {
-    title: 'piosenka6',
-    author: 'autor',
-    posterSrc: 'aleCo',
-    duration: '21:37',
-  },
-  {
-    title: 'piosenka7',
-    author: 'autor',
-    posterSrc: 'aleCo',
-    duration: '21:37',
-  },
-  {
-    title: 'piosenka8',
-    author: 'autor',
-    posterSrc: 'aleCo',
-    duration: '21:37',
-  },
-  {
-    title: 'piosenka9',
-    author: 'autor',
-    posterSrc: 'aleCo',
-    duration: '21:37',
-  },
-];
+type LikedSongsPanelProps = SongIdGlobalType & { className?: string };
 
-export const LikedSongsPanel = () => {
+export const LikedSongsPanel = ({
+  className,
+  playingSongId,
+  setPlayingSongId,
+  isSongPlaying,
+  setIsSongPlaying,
+}: LikedSongsPanelProps) => {
+  const { allSongs } = useAllSongs();
+
   return (
-    <div className={styles.likedWrapper}>
-      <PlaylistPanel songs={songs} />
+    <div className={clsx(styles.likedWrapper, className)}>
+      <PlaylistPanel
+        songs={allSongs}
+        playingSongId={playingSongId}
+        setPlayingSongId={setPlayingSongId}
+        isSongPlaying={isSongPlaying}
+        setIsSongPlaying={setIsSongPlaying}
+      />
     </div>
   );
 };

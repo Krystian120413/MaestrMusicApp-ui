@@ -19,6 +19,10 @@ type PlayerProps = {
     isLiked: boolean;
     setIsLiked: React.Dispatch<React.SetStateAction<boolean>>;
   };
+  isSongPlaying: boolean;
+  setIsSongPlaying: (
+    isPlaying: boolean | ((prevState: boolean) => boolean)
+  ) => void;
   onNextSong: () => void;
   onPrevSong: () => void;
 };
@@ -31,8 +35,9 @@ export const Player = ({
   liked,
   onNextSong,
   onPrevSong,
+  isSongPlaying,
+  setIsSongPlaying,
 }: PlayerProps) => {
-  const [isPlaying, setIsPlaying] = useState(false);
   const [trackProgress, setTrackProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -52,11 +57,11 @@ export const Player = ({
 
   useEffect(() => {
     if (audioRef.current) {
-      if (isPlaying) audioRef.current.play();
+      if (isSongPlaying) audioRef.current.play();
       else audioRef.current.pause();
       setDuration(audioRef.current.duration);
     }
-  }, [isPlaying, audioRef.current?.src, audioRef.current?.duration]);
+  }, [isSongPlaying, audioRef.current?.src, audioRef.current?.duration]);
 
   useEffect(() => {
     const trackProgressUpdate = setInterval(() => {
@@ -145,9 +150,9 @@ export const Player = ({
         <button
           type="button"
           className={clsx(styles.button, styles.playButton)}
-          onClick={() => setIsPlaying((prevState) => !prevState)}
+          onClick={() => setIsSongPlaying((prevState) => !prevState)}
         >
-          {isPlaying ? (
+          {isSongPlaying ? (
             <PauseIcon className={styles.playButtonPause} />
           ) : (
             <PlayIcon className={styles.playButton} />

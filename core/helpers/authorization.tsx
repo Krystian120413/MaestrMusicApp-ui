@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const logout = async () => {
-    const token = TokenService.getLocalRefreshToken();
+    const token = TokenService.getLocalRefreshToken;
     await instanceAxios.delete(`${ApiAuthUrl}${Paths.LOGOUT}`, {
       token,
     });
