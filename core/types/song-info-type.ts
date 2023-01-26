@@ -10,12 +10,22 @@ export type SongInfoType = {
 };
 
 export type SongType = {
-  id: number;
+  songId: number;
   title?: string;
   author?: string;
   posterSrc?: string;
   duration?: string;
   genres?: string[];
+};
+
+export type PlaylistDataType = {
+  name: string;
+  playlistId: number;
+};
+
+export type PlaylistInfoType = {
+  name: string;
+  songs: SongType[];
 };
 
 export type SongIdGlobalType = {

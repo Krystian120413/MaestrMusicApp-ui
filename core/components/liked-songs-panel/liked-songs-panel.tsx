@@ -1,10 +1,14 @@
+import { useEffect } from 'react';
 import clsx from 'clsx';
 import { useAllSongs } from 'hooks/useAllSongs';
 import { SongIdGlobalType } from 'types/song-info-type';
 import { PlaylistPanel } from 'components/playlist-panel/playlist-panel';
 import styles from './liked-songs-panel.module.scss';
 
-type LikedSongsPanelProps = SongIdGlobalType & { className?: string };
+type LikedSongsPanelProps = SongIdGlobalType & {
+  className?: string;
+  setPrevNextSongs: React.Dispatch<React.SetStateAction<number[]>>;
+};
 
 export const LikedSongsPanel = ({
   className,
@@ -12,8 +16,13 @@ export const LikedSongsPanel = ({
   setPlayingSongId,
   isSongPlaying,
   setIsSongPlaying,
+  setPrevNextSongs,
 }: LikedSongsPanelProps) => {
   const { allSongs } = useAllSongs();
+
+  useEffect(() => {
+    setPrevNextSongs(allSongs.map((song) => song.songId));
+  }, [setPrevNextSongs, allSongs]);
 
   return (
     <div className={clsx(styles.likedWrapper, className)}>

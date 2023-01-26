@@ -2,7 +2,17 @@ import { useAuth } from 'helpers/authorization';
 import SettingsIcon from 'assets/icons/settings-icon.svg';
 import styles from './user-nav.module.scss';
 
-export const UserNav = () => {
+type UserNavProps = {
+  setPlayingSongId: (id: number | ((prevSongId: number) => number)) => void;
+  setIsSongPlaying: (
+    isPlaying: boolean | ((prevState: boolean) => boolean)
+  ) => void;
+};
+
+export const UserNav = ({
+  setIsSongPlaying,
+  setPlayingSongId,
+}: UserNavProps) => {
   const auth = useAuth();
   return (
     <nav className={styles.nav}>
@@ -14,7 +24,11 @@ export const UserNav = () => {
         <button
           className={styles.navButton}
           type="button"
-          onClick={auth?.logout}
+          onClick={() => {
+            auth?.logout();
+            setPlayingSongId(-1);
+            setIsSongPlaying(false);
+          }}
         >
           Logout
         </button>

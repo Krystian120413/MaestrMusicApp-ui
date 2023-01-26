@@ -1,79 +1,60 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { usePlaylistInfo } from 'hooks/usePlaylistInfo';
+import { PlaylistInfoType, SongIdGlobalType } from 'types/song-info-type';
 import { TabColor } from 'types/tab-type';
 import BackIcon from 'assets/icons/back-icon.svg';
-import {
-  PlaylistPanel,
-  SongType,
-} from 'components/playlist-panel/playlist-panel';
+import { PlaylistPanel } from 'components/playlist-panel/playlist-panel';
 import { Tab } from 'components/tab';
 import styles from './playlists-panel.module.scss';
 
-type PlaylistTabType = {
+export type PlaylistTabType = {
   title: string;
   backgroundColor?: string | TabColor;
   playlistId: number;
 };
+type PlaylistsPanelProps = SongIdGlobalType & {
+  tabs?: PlaylistTabType[];
+};
 
-const playlists: PlaylistTabType[] = [
-  {
-    title: 'Dobra Muzyka',
-    backgroundColor: TabColor.DARK_ORANGE,
-    playlistId: 0,
-  },
-  {
-    title: 'Electro Swing',
-    backgroundColor: TabColor.GREEN,
-    playlistId: 1,
-  },
-];
-
-const songs: SongType[][] = [
-  [
-    {
-      title: 'Dobra muzyka 1',
-      author: 'wykonawca',
-      posterSrc: 'aleCo',
-      duration: '21:37',
-    },
-    {
-      title: 'Dobra muzyka 2',
-      author: 'wykonawca',
-      posterSrc: 'aleCo',
-      duration: '21:37',
-    },
-  ],
-  [
-    {
-      title: 'Electro Swing 1',
-      author: 'wykonawca',
-      posterSrc: 'aleCo',
-      duration: '21:37',
-    },
-    {
-      title: 'Electro Swing 2',
-      author: 'wykonawca',
-      posterSrc: 'aleCo',
-      duration: '21:37',
-    },
-  ],
-];
-
-export const PlaylistsPanel = () => {
+export const PlaylistsPanel = ({
+  isSongPlaying,
+  setIsSongPlaying,
+  playingSongId,
+  setPlayingSongId,
+  tabs,
+}: PlaylistsPanelProps) => {
   const [actualOpenedPlaylist, setActualOepenedPlaylist] =
     useState<React.ReactNode>('');
+  const [actualOpenedPlaylistIndex, setActualOepenedPlaylistIndex] =
+    useState(0);
+  const { playlistInfo } = usePlaylistInfo(actualOpenedPlaylistIndex);
+  const [playlistInfoState, setPlaylistInfoState] =
+    useState<PlaylistInfoType>(playlistInfo);
+
+  useEffect(() => {
+    setPlaylistInfoState(playlistInfo);
+  }, [playingSongId, playlistInfo]);
 
   return (
     <div className={styles.playlistsWrapper}>
-      {playlists.map(({ title, backgroundColor }, index) => (
+      {tabs?.map(({ title, backgroundColor, playlistId }) => (
         <Tab
+          className={styles.playlistsCover}
           key={title}
           title={title}
           backgroundColor={backgroundColor}
-          onClick={() =>
+          onClick={() => {
+            setActualOepenedPlaylistIndex(playlistId);
             setActualOepenedPlaylist(
-              <PlaylistPanel songs={songs[playlists[index].playlistId]} />
-            )
-          }
+              <PlaylistPanel
+                songs={playlistInfoState?.songs}
+                isSongPlaying={isSongPlaying}
+                playingSongId={playingSongId}
+                setPlayingSongId={setPlayingSongId}
+                setIsSongPlaying={setIsSongPlaying}
+              />
+            );
+          }}
         />
       ))}
       {actualOpenedPlaylist !== '' && (

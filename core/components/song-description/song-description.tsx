@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Image from 'next/image';
+import defaultCoverSrc from 'assets/images/default-cover.png';
 import styles from './song-description.module.scss';
 
 export type SongDescriptionType = {
@@ -30,7 +31,7 @@ export const SongDescription = ({
       >
         <Image
           className={styles.cover}
-          src={`data:;base64,${posterSrc}`}
+          src={posterSrc ? `data:;base64,${posterSrc}` : defaultCoverSrc}
           width="100%"
           height="100%"
           layout="responsive"

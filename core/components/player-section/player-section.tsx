@@ -11,6 +11,7 @@ import styles from './player-section.module.scss';
 
 type PlayerSectionType = SongIdGlobalType & {
   className?: string;
+  prevNextSongs: number[];
 };
 
 export const PlayerSection = ({
@@ -19,6 +20,7 @@ export const PlayerSection = ({
   isSongPlaying,
   setIsSongPlaying,
   className,
+  prevNextSongs,
 }: PlayerSectionType) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [audioSrc, setAudioSrc] = useState('');
@@ -36,11 +38,17 @@ export const PlayerSection = ({
   }, [audioSrc, data, playingSongId]);
 
   const nextSongHandler = () => {
-    setPlayingSongId((prevSongId: number) => prevSongId + 1);
+    const index = prevNextSongs?.findIndex((elem) => elem === playingSongId);
+    setPlayingSongId(
+      index < prevNextSongs.length - 1
+        ? prevNextSongs[index + 1]
+        : playingSongId
+    );
   };
 
   const prevSongHandler = () => {
-    setPlayingSongId((prevSongId: number) => prevSongId - 1);
+    const index = prevNextSongs?.findIndex((elem) => elem === playingSongId);
+    setPlayingSongId(index > 0 ? prevNextSongs[index - 1] : playingSongId);
   };
 
   return (

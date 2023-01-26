@@ -1,6 +1,13 @@
 .playlists-wrapper {
   height: 90%;
   color: var(--font-primary-color);
+  display: flex;
+  margin-top: 24px;
+}
+
+.playlists-cover {
+  width: 200px;
+  height: 200px;
 }
 
 .opened-playlist {

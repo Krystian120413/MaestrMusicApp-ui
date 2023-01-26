@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form';
 import { useAuth } from 'helpers/authorization';
-import Link from 'next/link';
 import PlayIcon from 'assets/icons/play-login-icon.svg';
 import PrevIcon from 'assets/icons/prev-login-icon.svg';
 import { ALL_CHAR_REGEXP, EMAIL_REGEXP } from 'utils/regexps';
@@ -11,7 +10,11 @@ type LoginValues = {
   password: string;
 };
 
-export const LoginForm = () => {
+type LoginFormProps = {
+  setIsSignUpOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export const LoginForm = ({ setIsSignUpOpen }: LoginFormProps) => {
   const {
     register,
     handleSubmit,
@@ -69,7 +72,7 @@ export const LoginForm = () => {
           <span className={styles.prev}>
             <PrevIcon />
           </span>
-          <button className={styles.submitButton}>
+          <button type="submit" className={styles.submitButton}>
             icon
             <PlayIcon />
           </button>
@@ -80,9 +83,13 @@ export const LoginForm = () => {
       </form>
       <p className={styles.newAccountParagraph}>
         Create a{' '}
-        <Link href="/signup">
-          <a className={styles.newAccountLink}>new account</a>
-        </Link>
+        <button
+          type="button"
+          className={styles.newAccountLink}
+          onClick={() => setIsSignUpOpen(true)}
+        >
+          new account
+        </button>
       </p>
       <h3 className={styles.instruction}>Click Play to LogIn</h3>
     </div>

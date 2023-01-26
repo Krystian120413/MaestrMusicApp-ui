@@ -6,21 +6,25 @@ import { Tabs } from 'components/tabs';
 import { UserNav } from 'components/user-nav';
 
 const UserPanel: NextPage = () => {
-  const [songId, setSongId] = useState(0);
+  const [songId, setSongId] = useState<number>(-1);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [prevNextSongs, setPrevNextSongs] = useState<number[]>([0, 0]);
+
   const content = [
-    <UserNav />,
+    <UserNav setPlayingSongId={setSongId} setIsSongPlaying={setIsPlaying} />,
     <Tabs
       playingSongId={songId}
       setPlayingSongId={setSongId}
       isSongPlaying={isPlaying}
       setIsSongPlaying={setIsPlaying}
+      setPrevNextSongs={setPrevNextSongs}
     />,
     <PlayerSection
       playingSongId={songId}
       setPlayingSongId={setSongId}
       isSongPlaying={isPlaying}
       setIsSongPlaying={setIsPlaying}
+      prevNextSongs={prevNextSongs}
     />,
   ];
 

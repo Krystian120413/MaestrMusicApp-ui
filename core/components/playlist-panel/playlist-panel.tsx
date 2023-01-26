@@ -15,14 +15,14 @@ export const PlaylistPanel = ({
 }: PlaylistPanelProps) => {
   return (
     <div className={styles.playlistWrapper}>
-      {songs.map(({ title, author, duration, id }, index) => (
+      {songs.map(({ title, author, duration, songId }, index) => (
         <SongInList
           key={title}
-          songId={id}
+          songId={songId}
           index={index + 1}
           title={title}
           author={author}
-          duration="02:37"
+          duration={duration}
           isSongPlaying={isSongPlaying}
           playingSongId={playingSongId}
           setPlayingSongId={setPlayingSongId}
