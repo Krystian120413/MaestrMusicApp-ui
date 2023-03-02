@@ -40,6 +40,10 @@ export const LoginForm = ({ setIsSignUpOpen }: LoginFormProps) => {
                 message: 'Invalid email address',
               },
               required: 'Required',
+              maxLength: {
+                value: 120,
+                message: 'Email max length: 120',
+              },
             })}
           />
           {!!errors && (
@@ -59,6 +63,10 @@ export const LoginForm = ({ setIsSignUpOpen }: LoginFormProps) => {
               minLength: {
                 value: 8,
                 message: 'Password min. length: 8',
+              },
+              maxLength: {
+                value: 120,
+                message: 'Password max length: 120',
               },
             })}
           />

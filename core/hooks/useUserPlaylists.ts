@@ -10,9 +10,9 @@ export const useUserPlaylists = () => {
     const getAnswer = async () => {
       try {
         const data = await getUserPlaylists();
-        setAllPlaylists(data);
+        setAllPlaylists(data.playlists);
       } catch (error) {
-        toast.error('Something went wrong during get_all_playlists');
+        toast.warning("You don't have any playlists. Let's create first!");
       }
     };
     getAnswer();

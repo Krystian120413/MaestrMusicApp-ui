@@ -1,5 +1,6 @@
 import { SongIdGlobalType, SongType } from 'types/song-info-type';
 import { SongInList } from 'components/song-in-list';
+import { timeParser } from 'utils/timeParser';
 import styles from './playlist-panel.module.scss';
 
 type PlaylistPanelProps = SongIdGlobalType & {
@@ -22,7 +23,7 @@ export const PlaylistPanel = ({
           index={index + 1}
           title={title}
           author={author}
-          duration={duration}
+          duration={timeParser(duration)}
           isSongPlaying={isSongPlaying}
           playingSongId={playingSongId}
           setPlayingSongId={setPlayingSongId}

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
+import AddIcon from 'assets/icons/add-icon.svg';
 import HeartIcon from 'assets/icons/heart-icon.svg';
-import LoopIcon from 'assets/icons/loop-icon.svg';
 import NextSongIcon from 'assets/icons/next-song-icon.svg';
 import PauseIcon from 'assets/icons/pause-icon.svg';
 import PlayIcon from 'assets/icons/play-icon.svg';
@@ -11,13 +11,9 @@ type PlayerProps = {
   className?: string;
   audioSrc?: string;
   expanded: boolean;
-  looped: {
-    isLooped: boolean;
-    setIsLooped: React.Dispatch<React.SetStateAction<boolean>>;
-  };
   liked: {
-    isLiked: boolean;
-    setIsLiked: React.Dispatch<React.SetStateAction<boolean>>;
+    isLiked?: boolean;
+    setIsLiked: React.Dispatch<React.SetStateAction<boolean | undefined>>;
   };
   isSongPlaying: boolean;
   setIsSongPlaying: (
@@ -31,7 +27,6 @@ export const Player = ({
   className,
   audioSrc = '',
   expanded,
-  looped,
   liked,
   onNextSong,
   onPrevSong,
@@ -77,6 +72,10 @@ export const Player = ({
     return () => clearInterval(trackProgressUpdate);
   }, []);
 
+  useEffect(() => {
+    liked.setIsLiked(liked.isLiked);
+  }, [liked.isLiked]);
+
   const onTimeChange = (value: number) => {
     if (audioRef.current) {
       audioRef.current.currentTime = value;
@@ -118,18 +117,14 @@ export const Player = ({
           type="button"
           className={clsx(
             styles.button,
-            styles.loopButton,
-            expanded && styles.loopButtonExpanded
+            styles.addButton,
+            expanded && styles.addButtonExpanded
           )}
-          onClick={() =>
-            looped.setIsLooped((prevLooppedState) => !prevLooppedState)
-          }
         >
-          loop
-          <LoopIcon
+          add
+          <AddIcon
             className={clsx(
-              styles.loopIcon,
-              looped.isLooped && styles.loopIconActivate
+              styles.addIcon && expanded && styles.addIconExpanded
             )}
           />
         </button>
@@ -180,7 +175,10 @@ export const Player = ({
             styles.heartButton,
             expanded && styles.heartButtonExpanded
           )}
-          onClick={() => liked.setIsLiked((prevLikedState) => !prevLikedState)}
+          onClick={() =>
+            audioRef?.current?.src &&
+            liked.setIsLiked((prevLikedState) => !prevLikedState)
+          }
         >
           heart
           <HeartIcon

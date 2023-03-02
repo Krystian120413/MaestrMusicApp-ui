@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
+import { useIsSongsLiked } from 'hooks/useIsSongLiked';
 import { useSongInfo } from 'hooks/useSongInfo';
 import { SongDetailsType, SongIdGlobalType } from 'types/song-info-type';
 import AddIcon from 'assets/icons/add-icon.svg';
@@ -28,8 +29,7 @@ export const PlayerSection = ({
   const [songPoster, setSongPoster] = useState('');
   const { data } = useSongInfo(playingSongId);
 
-  const [isLooped, setIsLooped] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+  const { isSongInLikedPlaylist, setIsLiked } = useIsSongsLiked(playingSongId);
 
   useEffect(() => {
     setAudioSrc(data.songSrc);
@@ -37,8 +37,13 @@ export const PlayerSection = ({
     if (data.poster) setSongPoster(data.poster);
   }, [audioSrc, data, playingSongId]);
 
+  // useEffect(() => {
+  //   isLiked
+  // })
+
   const nextSongHandler = () => {
     const index = prevNextSongs?.findIndex((elem) => elem === playingSongId);
+
     setPlayingSongId(
       index < prevNextSongs.length - 1
         ? prevNextSongs[index + 1]
@@ -100,8 +105,7 @@ export const PlayerSection = ({
         expanded={isExpanded}
         onPrevSong={prevSongHandler}
         onNextSong={nextSongHandler}
-        looped={{ isLooped, setIsLooped }}
-        liked={{ isLiked, setIsLiked }}
+        liked={{ isLiked: isSongInLikedPlaylist, setIsLiked }}
         isSongPlaying={isSongPlaying}
         setIsSongPlaying={setIsSongPlaying}
       />

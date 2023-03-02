@@ -12,10 +12,12 @@ export const usePlaylistInfo = (playlistId: number) => {
   useEffect(() => {
     const getAnswer = async () => {
       try {
-        const data = await getPlaylistInfo(playlistId);
-        setPlaylistInfo(data);
+        if (playlistId !== 0) {
+          const data = await getPlaylistInfo(playlistId);
+          setPlaylistInfo(data);
+        }
       } catch (error) {
-        toast.error('Something went wrong during get_playlist_info');
+        toast.warning('This playlist is empty!');
       }
     };
     getAnswer();

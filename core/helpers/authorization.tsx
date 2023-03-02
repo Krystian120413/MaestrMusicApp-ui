@@ -45,12 +45,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     password: string
   ) => {
     try {
-      const { data } = await axios.post(`${ApiAuthUrl}${Paths.SIGNUP}`, {
-        name: `${name} ${surname}`,
-        username: email,
-        password,
-      });
-      if (data) {
+      const { data, status } = await axios.post(
+        `${ApiAuthUrl}${Paths.SIGNUP}`,
+        {
+          name: `${name} ${surname}`,
+          username: email,
+          password,
+        }
+      );
+      if (data && status === 201) {
         return true;
       }
     } catch (error) {

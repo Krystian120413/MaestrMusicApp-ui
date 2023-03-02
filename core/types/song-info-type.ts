@@ -14,13 +14,18 @@ export type SongType = {
   title?: string;
   author?: string;
   posterSrc?: string;
-  duration?: string;
+  duration?: number;
   genres?: string[];
 };
 
 export type PlaylistDataType = {
   name: string;
   playlistId: number;
+};
+
+export type PlaylistsType = {
+  playlists: PlaylistDataType[];
+  liked: number;
 };
 
 export type PlaylistInfoType = {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import clsx from 'clsx';
 import { useAuth } from 'helpers/authorization';
 import { ALL_CHAR_REGEXP, EMAIL_REGEXP } from 'utils/regexps';
 import styles from './signup-panel.module.scss';
@@ -33,7 +34,11 @@ export const SignUpPanel = ({ setIsSignUpOpen }: SignUpPanelProps) => {
     password2s,
   }: SignUpValues) => {
     if (password2s === passwords) {
-      auth?.signUp(name, surname, emails, passwords);
+      const isSignedUp = auth?.signUp(name, surname, emails, passwords);
+      if (isSignedUp) {
+        toast.success('Created your account! Now you can log in!');
+        setIsSignUpOpen(false);
+      }
     } else {
       toast.warning('Passwords are not the same');
     }
@@ -43,7 +48,7 @@ export const SignUpPanel = ({ setIsSignUpOpen }: SignUpPanelProps) => {
     <div className={styles.signupWrapper}>
       <button
         type="button"
-        className={styles.button}
+        className={clsx(styles.button, styles.buttonBack)}
         onClick={() => setIsSignUpOpen(false)}
       >
         back
@@ -61,6 +66,10 @@ export const SignUpPanel = ({ setIsSignUpOpen }: SignUpPanelProps) => {
                 message: 'Invalid name',
               },
               required: 'Required',
+              maxLength: {
+                value: 120,
+                message: 'Name max length: 120',
+              },
             })}
           />
           {!!errors && (
@@ -80,6 +89,10 @@ export const SignUpPanel = ({ setIsSignUpOpen }: SignUpPanelProps) => {
                 message: 'Invalid surname',
               },
               required: 'Required',
+              maxLength: {
+                value: 120,
+                message: 'Surname max length: 120',
+              },
             })}
           />
           {!!errors && (
@@ -99,6 +112,10 @@ export const SignUpPanel = ({ setIsSignUpOpen }: SignUpPanelProps) => {
                 message: 'Invalid email address',
               },
               required: 'Required',
+              maxLength: {
+                value: 120,
+                message: 'Email max length: 120',
+              },
             })}
           />
           {!!errors && (
@@ -118,6 +135,10 @@ export const SignUpPanel = ({ setIsSignUpOpen }: SignUpPanelProps) => {
               minLength: {
                 value: 8,
                 message: 'Password min. length: 8',
+              },
+              maxLength: {
+                value: 120,
+                message: 'Password max length: 120',
               },
             })}
           />

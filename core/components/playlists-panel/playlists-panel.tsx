@@ -33,7 +33,12 @@ export const PlaylistsPanel = ({
 
   useEffect(() => {
     setPlaylistInfoState(playlistInfo);
-  }, [playingSongId, playlistInfo]);
+  }, [
+    actualOpenedPlaylistIndex,
+    playingSongId,
+    playlistInfo,
+    playlistInfoState.songs,
+  ]);
 
   return (
     <div className={styles.playlistsWrapper}>

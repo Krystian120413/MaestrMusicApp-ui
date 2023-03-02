@@ -12,7 +12,9 @@ export const useRecommended = () => {
         const data = await getRecommendedSongs();
         setRecommmendedSongs(data);
       } catch (error) {
-        toast.error('Something went wrong during get__song');
+        toast.warning(
+          "We can't reccomend you anything at this time. Check this tab later"
+        );
       }
     };
     getAnswer();

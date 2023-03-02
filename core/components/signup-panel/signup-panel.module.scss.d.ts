@@ -1,4 +1,5 @@
 export const button: string;
+export const buttonBack: string;
 export const form: string;
 export const input: string;
 export const inputError: string;

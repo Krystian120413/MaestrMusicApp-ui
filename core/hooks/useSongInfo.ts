@@ -9,7 +9,7 @@ export const useSongInfo = (songId: number) => {
   const songSrc = songId >= 0 ? getSongSrc(songId) : '';
 
   const getAnswer = async () => {
-    if (songId < 0) {
+    if (songId <= 0) {
       setSongInfo({ title: '', author: '' });
       setSongPoster('');
     } else {
