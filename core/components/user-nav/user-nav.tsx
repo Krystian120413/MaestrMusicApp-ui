@@ -1,5 +1,4 @@
 import { useAuth } from 'helpers/authorization';
-import SettingsIcon from 'assets/icons/settings-icon.svg';
 import styles from './user-nav.module.scss';
 
 type UserNavProps = {
@@ -16,9 +15,6 @@ export const UserNav = ({
   const auth = useAuth();
   return (
     <nav className={styles.nav}>
-      <button type="button">
-        <SettingsIcon />
-      </button>
       <div>
         {auth?.user?.name}
         <button

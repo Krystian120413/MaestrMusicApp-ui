@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import { usePlaylistInfo } from 'hooks/usePlaylistInfo';
 import { PlaylistInfoType, SongIdGlobalType } from 'types/song-info-type';
 import { TabColor } from 'types/tab-type';
+import AddIcon from 'assets/icons/add-icon.svg';
 import BackIcon from 'assets/icons/back-icon.svg';
+import { CreatePlaylistModal } from 'components/create-playlist-modal';
 import { PlaylistPanel } from 'components/playlist-panel/playlist-panel';
 import { Tab } from 'components/tab';
 import styles from './playlists-panel.module.scss';
@@ -30,6 +32,7 @@ export const PlaylistsPanel = ({
   const { playlistInfo } = usePlaylistInfo(actualOpenedPlaylistIndex);
   const [playlistInfoState, setPlaylistInfoState] =
     useState<PlaylistInfoType>(playlistInfo);
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
 
   useEffect(() => {
     setPlaylistInfoState(playlistInfo);
@@ -42,6 +45,10 @@ export const PlaylistsPanel = ({
 
   return (
     <div className={styles.playlistsWrapper}>
+      <CreatePlaylistModal
+        isModalVisible={isAddModalVisible}
+        setModalVisibility={setIsAddModalVisible}
+      />
       {tabs?.map(({ title, backgroundColor, playlistId }) => (
         <Tab
           className={styles.playlistsCover}
@@ -62,6 +69,13 @@ export const PlaylistsPanel = ({
           }}
         />
       ))}
+      <button
+        type="button"
+        className={styles.button}
+        onClick={() => setIsAddModalVisible(true)}
+      >
+        Add new <AddIcon className={styles.icon} />
+      </button>
       {actualOpenedPlaylist !== '' && (
         <div className={styles.openedPlaylist}>
           <button

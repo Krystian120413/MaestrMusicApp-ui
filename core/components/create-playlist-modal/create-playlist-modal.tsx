@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import clsx from 'clsx';
 import { postNewPlaylist } from 'utils/Axios';
 import { ALL_CHAR_REGEXP } from 'utils/regexps';
 import styles from './create-playlist-modal.module.scss';
@@ -10,12 +9,12 @@ type CreatePlaylistValue = {
 };
 
 type CreatePlaylistModalProps = {
-  isVisible: boolean;
+  isModalVisible: boolean;
   setModalVisibility: (newState: boolean) => void;
 };
 
 export const CreatePlaylistModal = ({
-  isVisible = false,
+  isModalVisible = false,
   setModalVisibility,
 }: CreatePlaylistModalProps) => {
   const {
@@ -36,39 +35,53 @@ export const CreatePlaylistModal = ({
   };
 
   return (
-    <div
-      className={clsx(
-        styles.createPlaylistWrapper,
-        isVisible && styles.createPlaylistWrapperVisible
-      )}
-    >
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.inputWrapper}>
-          <input
-            type="text"
-            placeholder="Playlist name"
-            className={styles.input}
-            {...register('name', {
-              pattern: ALL_CHAR_REGEXP,
-              required: 'Required',
-              minLength: {
-                value: 2,
-                message: 'Playlist name min. length: 2',
-              },
-              maxLength: {
-                value: 120,
-                message: 'Playlist name max length: 120',
-              },
-            })}
-          />
-          {!!errors && (
-            <p className={styles.inputError}>
-              {errors.name?.message?.toString()}
-            </p>
-          )}
+    <div>
+      {isModalVisible && (
+        <div className={styles.createPlaylistWrapper}>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className={styles.createPlaylistWrapper}
+          >
+            <div className={styles.inputWrapper}>
+              <h3>Add new playlist</h3>
+              <input
+                type="text"
+                placeholder="Playlist name"
+                className={styles.input}
+                {...register('name', {
+                  pattern: ALL_CHAR_REGEXP,
+                  required: 'Required',
+                  minLength: {
+                    value: 2,
+                    message: 'Playlist name min. length: 2',
+                  },
+                  maxLength: {
+                    value: 120,
+                    message: 'Playlist name max length: 120',
+                  },
+                })}
+              />
+              {!!errors && (
+                <p className={styles.inputError}>
+                  {errors.name?.message?.toString()}
+                </p>
+              )}
+            </div>
+            <button type="submit" className={styles.button}>
+              Add new playlist
+            </button>
+            <button
+              type="button"
+              className={styles.button}
+              onClick={() => {
+                setModalVisibility(false);
+              }}
+            >
+              Cancel
+            </button>
+          </form>
         </div>
-        <button type="submit">Add new playlist</button>
-      </form>
+      )}
     </div>
   );
 };

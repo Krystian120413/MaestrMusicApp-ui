@@ -13,6 +13,7 @@ const SongApiUrl = `${ApiUrl}/songs`;
 const PlaylistsApiUrl = `${ApiUrl}/playlists`;
 const RecomendedApiUrl = `${ApiUrl}/recommended`;
 const PlaylistApiUrl = `${ApiUrl}/playlist`;
+const RadioApiUrl = `${ApiUrl}/radio`;
 
 export const getAllSongs = async () => {
   const response = await instanceAxios.get<SongType[]>(`${SongApiUrl}`);
@@ -96,4 +97,20 @@ export const getSongPoster = async (songId: number) => {
     .then((res) => Buffer.from(res.data, 'binary').toString('base64'));
 
   return response;
+};
+
+export const postGenerateToken = async () => {
+  const response = await instanceAxios.post<{ shareToken: string }>(
+    `${RadioApiUrl}/${TokenService.getUser().userId}`
+  );
+
+  return response.data.shareToken;
+};
+
+export const getSongFromToken = async (token: string) => {
+  const response = await instanceAxios.get<{ songId: number }>(
+    `${RadioApiUrl}/${token}`
+  );
+
+  return response.data.songId;
 };

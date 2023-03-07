@@ -27,3 +27,24 @@
     width: 32px;
   }
 }
+
+.button {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  background-color: var(--secondary-red-color);
+  color: var(--font-primary-color);
+  font-size: var(--font-heading-size);
+  font-weight: 600;
+  margin: 0 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.icon {
+  width: 32px;
+}

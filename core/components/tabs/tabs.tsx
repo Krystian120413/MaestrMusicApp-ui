@@ -4,6 +4,7 @@ import { useUserPlaylists } from 'hooks/useUserPlaylists';
 import { SongIdGlobalType } from 'types/song-info-type';
 import { TabColor } from 'types/tab-type';
 import BackIcon from 'assets/icons/back-icon.svg';
+import { AllSongsPanel } from 'components/all-songs-panel';
 import { LikedSongsPanel } from 'components/liked-songs-panel';
 import { PlaylistsPanel, PlaylistTabType } from 'components/playlists-panel';
 import { RecommendedSongsPanel } from 'components/recommended-songs-panel';
@@ -15,19 +16,6 @@ type TabsProps = SongIdGlobalType & {
   styleClassName?: string;
   setPrevNextSongs: React.Dispatch<React.SetStateAction<number[]>>;
 };
-
-const genres: PlaylistTabType[] = [
-  {
-    title: 'Rock',
-    backgroundColor: TabColor.DARK_ORANGE,
-    playlistId: 0,
-  },
-  {
-    title: 'Pop',
-    backgroundColor: TabColor.GREEN,
-    playlistId: 1,
-  },
-];
 
 export const Tabs = ({
   playingSongId,
@@ -78,16 +66,16 @@ export const Tabs = ({
       ),
     },
     {
-      title: 'GENRES',
+      title: 'ALL SONGS',
       backgroundColor: TabColor.LIGHT_GREEN,
       className: styles.genres,
       component: (
-        <PlaylistsPanel
+        <AllSongsPanel
           isSongPlaying={isSongPlaying}
           playingSongId={playingSongId}
           setPlayingSongId={setPlayingSongId}
           setIsSongPlaying={setIsSongPlaying}
-          tabs={genres}
+          setPrevNextSongs={setPrevNextSongs}
         />
       ),
     },
@@ -108,7 +96,7 @@ export const Tabs = ({
       title: 'USER RADIO',
       backgroundColor: TabColor.ORANGE,
       className: styles.userRadio,
-      component: <UserRadioView />,
+      component: <UserRadioView setPlayingSongId={setPlayingSongId} />,
     },
   ];
 
