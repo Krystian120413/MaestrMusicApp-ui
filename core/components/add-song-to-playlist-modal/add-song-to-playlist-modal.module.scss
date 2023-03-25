@@ -1,12 +1,20 @@
 .add-song-wrapper {
   position: absolute;
-  top: 50%;
+  top: -100px;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 8;
   flex-direction: column;
   align-items: center;
   display: none;
+  width: 400px;
+  height: 200px;
+  background-color: var(--font-primary-color);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  gap: 30px;
 
   &--visible {
     display: flex;
@@ -27,9 +35,7 @@
   height: 40px;
   font-size: 1.6rem;
   border-radius: 4px;
-  background-color: var(--primary-input-background);
-  color: var(--font-primary-color);
-  border: 1px solid var(--primary-orange-color);
+  color: var(--font-secondary-color);
 }
 
 .input-error {
@@ -37,4 +43,16 @@
   bottom: 0px;
   left: 16px;
   color: var(--primary-red-color);
+}
+
+.button {
+  border: 1px solid var(--primary-orange-color);
+  border-radius: 4px;
+  padding: 4px 8px;
+
+  &--close {
+    font-size: 0;
+    width: 40px;
+    rotate: 45deg;
+  }
 }

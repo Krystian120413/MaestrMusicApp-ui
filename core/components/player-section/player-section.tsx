@@ -6,6 +6,7 @@ import { SongDetailsType, SongIdGlobalType } from 'types/song-info-type';
 import AddIcon from 'assets/icons/add-icon.svg';
 import BackIcon from 'assets/icons/back-icon.svg';
 import ExpandIcon from 'assets/icons/expand-icon.svg';
+import { AddSongToPlaylistModal } from 'components/add-song-to-playlist-modal';
 import { Player } from 'components/player/player';
 import { SongDescription } from 'components/song-description';
 import styles from './player-section.module.scss';
@@ -30,6 +31,9 @@ export const PlayerSection = ({
   const { data } = useSongInfo(playingSongId);
 
   const { isSongInLikedPlaylist, setIsLiked } = useIsSongsLiked(playingSongId);
+
+  const [isAddToPlaylistModalVisible, setIsAddToPlaylistModalVisible] =
+    useState(false);
 
   useEffect(() => {
     setAudioSrc(data.songSrc);
@@ -108,6 +112,7 @@ export const PlayerSection = ({
         liked={{ isLiked: isSongInLikedPlaylist, setIsLiked }}
         isSongPlaying={isSongPlaying}
         setIsSongPlaying={setIsSongPlaying}
+        openModal={setIsAddToPlaylistModalVisible}
       />
       <button
         type="button"
@@ -120,6 +125,11 @@ export const PlayerSection = ({
         expand btn
         <ExpandIcon />
       </button>
+      <AddSongToPlaylistModal
+        songId={playingSongId}
+        isVisible={isAddToPlaylistModalVisible}
+        setModalVisibility={setIsAddToPlaylistModalVisible}
+      />
     </div>
   );
 };

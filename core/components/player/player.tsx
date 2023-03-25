@@ -21,6 +21,7 @@ type PlayerProps = {
   ) => void;
   onNextSong: () => void;
   onPrevSong: () => void;
+  openModal: (newState: boolean) => void;
 };
 
 export const Player = ({
@@ -32,6 +33,7 @@ export const Player = ({
   onPrevSong,
   isSongPlaying,
   setIsSongPlaying,
+  openModal,
 }: PlayerProps) => {
   const [trackProgress, setTrackProgress] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -115,6 +117,7 @@ export const Player = ({
       >
         <button
           type="button"
+          onClick={() => openModal(true)}
           className={clsx(
             styles.button,
             styles.addButton,

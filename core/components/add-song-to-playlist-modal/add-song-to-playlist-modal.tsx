@@ -1,9 +1,12 @@
-import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import Select from 'react-select';
 import { toast } from 'react-toastify';
 import clsx from 'clsx';
+import { useUserPlaylists } from 'hooks/useUserPlaylists';
+import CloseIcon from 'assets/icons/add-icon.svg';
 import { postSongToPlaylist } from 'utils/Axios';
-import { ALL_CHAR_REGEXP } from 'utils/regexps';
-import styles from './create-playlist-modal.module.scss';
+import styles from './add-song-to-playlist-modal.module.scss';
 
 type AddSongsToPlaylistValue = {
   playlistId: number;
@@ -22,9 +25,22 @@ export const AddSongToPlaylistModal = ({
 }: AddSongToPlaylistModalProps) => {
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<AddSongsToPlaylistValue>();
+  const { playlists } = useUserPlaylists();
+  const [userPlaylists, setUserPlaylists] =
+    useState<{ value: number; label: string }[]>();
+
+  useEffect(() => {
+    const options = playlists.map((name, playlistId) => ({
+      value: playlistId,
+      label: name.name,
+    }));
+
+    setUserPlaylists(options);
+  }, [playlists]);
 
   const onSubmit = async ({ playlistId }: AddSongsToPlaylistValue) => {
     await postSongToPlaylist(songId, playlistId)
@@ -33,7 +49,7 @@ export const AddSongToPlaylistModal = ({
         setModalVisibility(false);
       })
       .catch(() => {
-        toast.error("Can't create this playlist now.");
+        toast.error("Can't add song to this playlist now.");
       });
   };
 
@@ -44,33 +60,40 @@ export const AddSongToPlaylistModal = ({
         isVisible && styles.addSongWrapperVisible
       )}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.inputWrapper}>
-          <input
-            type="text"
-            placeholder="Playlist name"
-            className={styles.input}
-            {...register('playlistId', {
-              pattern: ALL_CHAR_REGEXP,
-              required: 'Required',
-              minLength: {
-                value: 2,
-                message: 'Playlist name min. length: 2',
-              },
-              maxLength: {
-                value: 120,
-                message: 'Playlist name max length: 120',
-              },
-            })}
-          />
-          {!!errors && (
-            <p className={styles.inputError}>
-              {errors.playlistId?.message?.toString()}
-            </p>
-          )}
-        </div>
-        <button type="submit">Add song to playlist</button>
-      </form>
+      {isVisible && (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <button
+            type="button"
+            className={styles.buttonClose}
+            onClick={() => setModalVisibility(false)}
+          >
+            close <CloseIcon />
+          </button>
+          <div className={styles.inputWrapper}>
+            <Controller
+              control={control}
+              name="playlistId"
+              render={({ field: { value, onChange } }) => (
+                <Select
+                  options={userPlaylists}
+                  className={styles.input}
+                  value={value}
+                  onChange={(val) => onChange(val.value)}
+                />
+              )}
+            />
+
+            {!!errors && (
+              <p className={styles.inputError}>
+                {errors.playlistId?.message?.toString()}
+              </p>
+            )}
+          </div>
+          <button type="submit" className={styles.button}>
+            Add song to playlist
+          </button>
+        </form>
+      )}
     </div>
   );
 };
