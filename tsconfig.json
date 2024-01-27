@@ -19,6 +19,6 @@
       "*": ["core/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "core/components/signup-panel"],
   "exclude": ["node_modules", "next-env.d.ts"]
 }

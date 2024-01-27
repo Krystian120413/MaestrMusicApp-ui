@@ -22,6 +22,12 @@ type AuthContextType = {
   isAuthenticated: boolean;
   user?: UserDataType | null;
   login: (email: string, password: string) => void;
+  signUp: (
+    name: string,
+    surname: string,
+    email: string,
+    password: string
+  ) => void;
   logout: () => void;
 };
 
@@ -31,6 +37,30 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserDataType | null>();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
+
+  const signUp = async (
+    name: string,
+    surname: string,
+    email: string,
+    password: string
+  ) => {
+    try {
+      const { data, status } = await axios.post(
+        `${ApiAuthUrl}${Paths.SIGNUP}`,
+        {
+          name: `${name} ${surname}`,
+          username: email,
+          password,
+        }
+      );
+      if (data && status === 201) {
+        return true;
+      }
+    } catch (error) {
+      toast.error('Something went wrong!');
+    }
+    return false;
+  };
 
   const login = async (email: string, password: string) => {
     try {
@@ -48,7 +78,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const logout = async () => {
-    const token = TokenService.getLocalRefreshToken();
+    const token = TokenService.getLocalRefreshToken;
     await instanceAxios.delete(`${ApiAuthUrl}${Paths.LOGOUT}`, {
       token,
     });
@@ -60,7 +90,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     async function loadUserFromLocalStorage() {
       const token = TokenService.getLocalAccessToken();
-      if (token && user !== null && user !== undefined) {
+      if (token && !!user) {
         TokenService.setUser(user);
         setIsAuthenticated(true);
       }
@@ -73,6 +103,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       isAuthenticated,
       user,
       login,
+      signUp,
       logout,
     }),
     [isAuthenticated, user]

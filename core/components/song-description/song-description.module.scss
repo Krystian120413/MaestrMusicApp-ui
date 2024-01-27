@@ -1,0 +1,118 @@
+.song-description-wrapper {
+  width: 80%;
+  display: grid;
+  grid-template:
+    "cover title" 1fr
+    "cover author" 1fr
+    / 54px auto;
+
+  @include md {
+    width: 30%;
+    grid-template:
+      "cover title" 1fr
+      "cover author" 1fr
+      / 84px auto;
+  }
+
+  &--expanded {
+    width: auto;
+    grid-template:
+      "cover" auto
+      "title" 1fr
+      "author" 1fr
+      / auto;
+    justify-content: center;
+
+    @include md {
+      width: 80%;
+      grid-template:
+      "cover title" 1fr
+      "cover author" 1fr
+      "cover ." 1fr
+      / 560px auto;
+      justify-content: flex-start;
+    }
+  }
+}
+
+.cover-wrapper {
+  grid-area: cover;
+  width: 54px;
+  height: 54px;
+
+  @include md {
+    width: 84px;
+    height: 84px;
+  }
+
+  &--expanded {
+    height: 280px;
+    width: 280px;
+
+    @include md {
+      height: 480px;
+      width: 480px;
+    }
+  }
+}
+
+.cover {
+  border-radius: 8px;
+}
+
+.title {
+  grid-area: title;
+  font-size: 1.8rem;
+  font-weight: 700;
+  padding-left: 16px;
+  max-height: 40px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @include md {
+    font-size: 2.4rem;
+    max-width: 400px;
+  }
+
+  &--expanded {
+    padding: 0;
+    margin: 32px 0 8px;
+    font-size: 2.4rem;
+    text-align: center;
+
+    @include md {
+      font-size: 4.8rem;
+      max-width: 600px;
+      max-height: 240px;
+      text-align: center;
+    }
+  }
+}
+
+.author {
+  grid-area: author;
+  color: var(--primary-gray-color);
+  font-size: 1.2rem;
+  font-weight: 400;
+  padding-left: 16px;
+  max-height: 40px;
+  text-overflow: ellipsis;
+
+  @include md {
+    font-size: 2rem;
+    max-width: 400px;
+  }
+
+  &--expanded {
+    padding: 0;
+    text-align: center;
+    font-size: 1.4rem;
+
+    @include md {
+      font-size: 3.2rem;
+      width: 400px;
+      max-height: 240px;
+      text-align: center;
+    }
+  }
+}

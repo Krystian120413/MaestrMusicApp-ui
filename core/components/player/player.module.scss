@@ -30,6 +30,39 @@
 
 .range {
   width: 100%;
+    // margin: 8px 0;
+    // background-color: transparent;
+    // -webkit-appearance: none;
+
+  &:focus {
+    outline: none;
+  }
+  
+  // &::-webkit-slider-runnable-track {
+  //   background: var(--primary-gray-color);
+  //   border-radius: 4px;
+  //   width: 100%;
+  //   height: 8px;
+  //   cursor: pointer;
+  // }
+
+  // &::-webkit-slider-thumb {
+  //   margin-top: -6px;
+  //   width: 20px;
+  //   height: 20px;
+  //   background: var(--primary-red-color);
+  //   border-radius: 16px;
+  //   cursor: pointer;
+  //   -webkit-appearance: none;
+  // }
+
+  // &::moz-range-progress {
+  //   background-color: var(--primary-red-color)
+  // };
+
+  // &:focus::-webkit-slider-runnable-track {
+  //   background: var(--primary-gray-color);
+  // }
 }
 
 .button {
@@ -72,7 +105,7 @@
   }
 }
 
-.loop-button {
+.add-button {
   display: none;
 
   @include md {
@@ -84,11 +117,11 @@
   }
 }
 
-.loop-icon {
+.add-icon {
   color: var(--primary-icon-color);
 
-  &--activate {
-    color: var(--primary-green-color);
+  &--expanded {
+    display: none;
   }
 }
 

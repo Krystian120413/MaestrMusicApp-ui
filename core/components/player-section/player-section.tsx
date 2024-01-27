@@ -1,41 +1,73 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
+import { useIsSongsLiked } from 'hooks/useIsSongLiked';
 import { useSongInfo } from 'hooks/useSongInfo';
-import Image from 'next/image';
-import { SongDetailsType } from 'types/song-info-type';
+import { SongDetailsType, SongIdGlobalType } from 'types/song-info-type';
 import AddIcon from 'assets/icons/add-icon.svg';
 import BackIcon from 'assets/icons/back-icon.svg';
 import ExpandIcon from 'assets/icons/expand-icon.svg';
+import { AddSongToPlaylistModal } from 'components/add-song-to-playlist-modal';
 import { Player } from 'components/player/player';
+import { SongDescription } from 'components/song-description';
 import styles from './player-section.module.scss';
 
-export const PlayerSection = () => {
+type PlayerSectionType = SongIdGlobalType & {
+  className?: string;
+  prevNextSongs: number[];
+};
+
+export const PlayerSection = ({
+  playingSongId,
+  setPlayingSongId,
+  isSongPlaying,
+  setIsSongPlaying,
+  className,
+  prevNextSongs,
+}: PlayerSectionType) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [songId, setSongId] = useState(0);
   const [audioSrc, setAudioSrc] = useState('');
   const [songDetails, setSongDetails] = useState<SongDetailsType>();
   const [songPoster, setSongPoster] = useState('');
-  const { data } = useSongInfo(songId);
+  const { data } = useSongInfo(playingSongId);
 
-  const [isLooped, setIsLooped] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+  const { isSongInLikedPlaylist, setIsLiked } = useIsSongsLiked(playingSongId);
+
+  const [isAddToPlaylistModalVisible, setIsAddToPlaylistModalVisible] =
+    useState(false);
 
   useEffect(() => {
     setAudioSrc(data.songSrc);
     setSongDetails(data.details);
     if (data.poster) setSongPoster(data.poster);
-  }, [audioSrc, data, songId]);
+  }, [audioSrc, data, playingSongId]);
+
+  // useEffect(() => {
+  //   isLiked
+  // })
 
   const nextSongHandler = () => {
-    setSongId((prevSongId) => prevSongId + 1);
+    const index = prevNextSongs?.findIndex((elem) => elem === playingSongId);
+
+    setPlayingSongId(
+      index < prevNextSongs.length - 1
+        ? prevNextSongs[index + 1]
+        : playingSongId
+    );
   };
 
   const prevSongHandler = () => {
-    setSongId((prevSongId) => prevSongId - 1);
+    const index = prevNextSongs?.findIndex((elem) => elem === playingSongId);
+    setPlayingSongId(index > 0 ? prevNextSongs[index - 1] : playingSongId);
   };
 
   return (
-    <div className={clsx(styles.wrapper, isExpanded && styles.wrapperExpanded)}>
+    <div
+      className={clsx(
+        styles.wrapper,
+        isExpanded && styles.wrapperExpanded,
+        className
+      )}
+    >
       <button
         type="button"
         className={clsx(
@@ -62,36 +94,12 @@ export const PlayerSection = () => {
           </button>
         </div>
       )}
-      <div
-        className={clsx(
-          styles.songDescriptionWrapper,
-          isExpanded && styles.songDescriptionWrapperExpanded
-        )}
-      >
-        <div
-          className={clsx(
-            styles.coverWrapper,
-            isExpanded && styles.coverWrapperExpanded
-          )}
-        >
-          <Image
-            className={styles.cover}
-            src={`data:;base64,${songPoster}`}
-            width="100%"
-            height="100%"
-            layout="responsive"
-            alt="okładka"
-          />
-        </div>
-        <div className={clsx(styles.title, isExpanded && styles.titleExpanded)}>
-          {songDetails?.title}
-        </div>
-        <div
-          className={clsx(styles.author, isExpanded && styles.authorExpanded)}
-        >
-          {songDetails?.author}
-        </div>
-      </div>
+      <SongDescription
+        title={songDetails?.title}
+        author={songDetails?.author}
+        isExpanded={isExpanded}
+        posterSrc={songPoster}
+      />
       <Player
         className={clsx(
           styles.playerWrapper,
@@ -101,8 +109,10 @@ export const PlayerSection = () => {
         expanded={isExpanded}
         onPrevSong={prevSongHandler}
         onNextSong={nextSongHandler}
-        looped={{ isLooped, setIsLooped }}
-        liked={{ isLiked, setIsLiked }}
+        liked={{ isLiked: isSongInLikedPlaylist, setIsLiked }}
+        isSongPlaying={isSongPlaying}
+        setIsSongPlaying={setIsSongPlaying}
+        openModal={setIsAddToPlaylistModalVisible}
       />
       <button
         type="button"
@@ -115,6 +125,11 @@ export const PlayerSection = () => {
         expand btn
         <ExpandIcon />
       </button>
+      <AddSongToPlaylistModal
+        songId={playingSongId}
+        isVisible={isAddToPlaylistModalVisible}
+        setModalVisibility={setIsAddToPlaylistModalVisible}
+      />
     </div>
   );
 };
