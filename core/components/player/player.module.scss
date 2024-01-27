@@ -30,6 +30,10 @@
 
 .range {
   width: 100%;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .button {
@@ -72,7 +76,7 @@
   }
 }
 
-.loop-button {
+.add-button {
   display: none;
 
   @include md {
@@ -84,11 +88,11 @@
   }
 }
 
-.loop-icon {
+.add-icon {
   color: var(--primary-icon-color);
 
-  &--activate {
-    color: var(--primary-green-color);
+  &--expanded {
+    display: none;
   }
 }
 

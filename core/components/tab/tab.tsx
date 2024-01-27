@@ -1,3 +1,4 @@
+import React from 'react';
 import clsx from 'clsx';
 import { TabColor } from 'types/tab-type';
 import styles from './tab.module.scss';
@@ -5,10 +6,16 @@ import styles from './tab.module.scss';
 type TabProps = {
   className?: string;
   title: string;
-  backgroundColor?: TabColor;
+  backgroundColor?: string | TabColor;
+  onClick: () => void;
 };
 
-export const Tab = ({ className, title, backgroundColor }: TabProps) => {
+export const Tab = ({
+  className,
+  title,
+  backgroundColor,
+  onClick,
+}: TabProps) => {
   const changeCardColor = () => {
     switch (backgroundColor) {
       case TabColor.RED:
@@ -28,7 +35,7 @@ export const Tab = ({ className, title, backgroundColor }: TabProps) => {
 
   return (
     <div className={clsx(styles.wrapper, className)}>
-      <button type="button" className={styles.button}>
+      <button type="button" className={styles.button} onClick={onClick}>
         <div className={clsx(styles.card, changeCardColor())}>
           <h3 className={styles.cardTitle}>{title}</h3>
         </div>

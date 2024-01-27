@@ -5,19 +5,24 @@ import { getSongInfo, getSongPoster, getSongSrc } from 'utils/Axios';
 
 export const useSongInfo = (songId: number) => {
   const [songInfo, setSongInfo] = useState<SongDetailsType>();
-  const songSrc = getSongSrc(songId);
   const [songPoster, setSongPoster] = useState('');
+  const songSrc = songId >= 0 ? getSongSrc(songId) : '';
 
   const getAnswer = async () => {
-    try {
-      const songDetails = await getSongInfo(songId);
-      const songCover = await getSongPoster(songId);
-      setSongInfo(songDetails);
-      setSongPoster(songCover);
-    } catch (error) {
-      toast.error('Something went wrong', {
-        autoClose: 3000,
-      });
+    if (songId <= 0) {
+      setSongInfo({ title: '', author: '' });
+      setSongPoster('');
+    } else {
+      try {
+        const songDetails = await getSongInfo(songId);
+        const songCover = await getSongPoster(songId);
+        setSongInfo(songDetails);
+        setSongPoster(songCover);
+      } catch (error) {
+        toast.error('Something went wrong', {
+          autoClose: 3000,
+        });
+      }
     }
   };
 

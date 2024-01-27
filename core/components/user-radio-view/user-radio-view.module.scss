@@ -1,0 +1,62 @@
+.radio-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title {
+    font-size: 2.8rem;
+  }
+
+  .paragraph {
+    color: var(--primary-gray-color);
+    padding: 4px 0;
+    font-size: 1.6rem;
+
+    &--second {
+      margin-top: 120px;
+    }
+  }
+
+  .button {
+    background-color: var(--secondary-button-color);
+    color: var(--font-secondary-color);
+    padding: 8px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.6rem;
+    width: 240px;
+  }
+
+  .token {
+    color: var(--font-primary-color);
+    font-size: 1.6rem;
+    margin: 16px 12px;
+    padding: 8px 16px;
+    max-width: 600px;
+    border: 2px dashed var(--primary-gray-color);
+    border-radius: 8px;
+    transition: 0.2s;
+    word-wrap: break-word;
+
+    &:hover {
+      background-color: var(--primary-red-color);
+    }
+  }
+
+  .input {
+    font-size: 1.6rem;
+    width: 400px;
+    padding: 4px 0;
+
+    &__button {
+    color: var(--font-primary-color);
+    padding: 8px;
+    font-weight: 600;
+    }
+  }
+
+  .input-wrapper {
+    background: var(--background-secondary-gradient);
+    padding: 4px;
+  }
+}

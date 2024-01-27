@@ -1,0 +1,46 @@
+.song-in-list-wrapper {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 120%;
+  margin: 16px 0;
+
+  &__id {
+    color: var(--primary-gray-color);
+    width: 32px;
+  }
+
+  &__duration {
+    color: var(--primary-gray-color);
+  }
+}
+
+.button {
+  padding: 0 15px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0;
+}
+
+.play-button {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 4px;
+
+  &--pause {
+    width: 32px;
+    height: 44px;
+    align-self: center;
+    justify-self: center;
+  }
+}

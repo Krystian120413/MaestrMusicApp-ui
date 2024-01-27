@@ -1,0 +1,8 @@
+.playlist-wrapper {
+  height: 90%;
+  overflow-y: auto;
+  color: var(--font-primary-color);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
