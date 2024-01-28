@@ -5,7 +5,7 @@ import { TabColor } from 'types/tab-type';
 import AddIcon from 'assets/icons/add-icon.svg';
 import BackIcon from 'assets/icons/back-icon.svg';
 import { CreatePlaylistModal } from 'components/create-playlist-modal';
-import { PlaylistPanel } from 'components/playlist-panel/playlist-panel';
+import { PlaylistPanel } from 'components/playlist-panel';
 import { Tab } from 'components/tab';
 import styles from './playlists-panel.module.scss';
 

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import clsx from 'clsx';
 import { useAllSongs } from 'hooks/useAllSongs';
 import { SongIdGlobalType } from 'types/song-info-type';
-import { PlaylistPanel } from 'components/playlist-panel/playlist-panel';
+import { PlaylistPanel } from 'components/playlist-panel';
 import styles from './all-songs-panel.module.scss';
 
 type AllSongsPanelProps = SongIdGlobalType & {

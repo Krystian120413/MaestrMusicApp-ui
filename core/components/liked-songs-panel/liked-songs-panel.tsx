@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import clsx from 'clsx';
 import { useUserLikedSongs } from 'hooks/useUserLikedSongs';
 import { SongIdGlobalType } from 'types/song-info-type';
-import { PlaylistPanel } from 'components/playlist-panel/playlist-panel';
+import { PlaylistPanel } from 'components/playlist-panel';
 import styles from './liked-songs-panel.module.scss';
 
 type LikedSongsPanelProps = SongIdGlobalType & {

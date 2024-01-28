@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Select from 'react-select';
 import { toast } from 'react-toastify';
@@ -7,6 +7,7 @@ import { useUserPlaylists } from 'hooks/useUserPlaylists';
 import CloseIcon from 'assets/icons/add-icon.svg';
 import { postSongToPlaylist } from 'utils/Axios';
 import styles from './add-song-to-playlist-modal.module.scss';
+import { UserPlaylistOptionType } from 'types/forms-types';
 
 type AddSongsToPlaylistValue = {
   playlistId: number;
@@ -24,14 +25,14 @@ export const AddSongToPlaylistModal = ({
   setModalVisibility,
 }: AddSongToPlaylistModalProps) => {
   const {
-    register,
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<AddSongsToPlaylistValue>();
   const { playlists } = useUserPlaylists();
-  const [userPlaylists, setUserPlaylists] =
-    useState<{ value: number; label: string }[]>();
+  const [userPlaylists, setUserPlaylists] = useState<UserPlaylistOptionType[]>([
+    { value: 0, label: '' },
+  ]);
 
   useEffect(() => {
     const options = playlists.map((name, playlistId) => ({
@@ -73,16 +74,16 @@ export const AddSongToPlaylistModal = ({
             <Controller
               control={control}
               name="playlistId"
-              render={({ field: { value, onChange } }) => (
+              render={({ field: { onChange, value, ref } }) => (
                 <Select
+                  ref={ref}
                   options={userPlaylists}
                   className={styles.input}
-                  value={value}
-                  onChange={(val) => onChange(val.value)}
+                  value={userPlaylists.find((c) => c.value === value)}
+                  onChange={(val) => onChange(val!.value)}
                 />
               )}
             />
-
             {!!errors && (
               <p className={styles.inputError}>
                 {errors.playlistId?.message?.toString()}

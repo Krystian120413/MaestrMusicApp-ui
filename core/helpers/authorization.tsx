@@ -80,9 +80,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = async () => {
     const token = TokenService.getLocalRefreshToken;
     await instanceAxios.delete(`${ApiAuthUrl}${Paths.LOGOUT}`, {
-      token,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
-    delete instanceAxios.defaults.headers.Authorization;
+    delete instanceAxios.defaults.headers.common['Authorization'];
     TokenService.removeUser();
     router.push('/');
   };

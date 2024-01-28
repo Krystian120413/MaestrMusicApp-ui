@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { useRecommended } from 'hooks/useRecommended';
 import { SongIdGlobalType } from 'types/song-info-type';
-import { PlaylistPanel } from 'components/playlist-panel/playlist-panel';
+import { PlaylistPanel } from 'components/playlist-panel';
 import styles from './recommended-songs-panel.module.scss';
 
 type RecommendedSongsPanelProps = SongIdGlobalType & { className?: string };
